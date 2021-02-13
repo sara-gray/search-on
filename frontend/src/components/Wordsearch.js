@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-// import { generateWordsearch } from '../Utils/generateWordsearch'
 import wordsearch from 'wordsearch-generator'
 
 const Wordsearch = () => {

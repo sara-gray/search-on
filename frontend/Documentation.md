@@ -10,7 +10,7 @@
 - words is an array of strings
 
 - hideWords(grid, languageCode)
-  Returns a new grid where each 0 element is replaced by a random letter in the given language
+- Returns a new grid where each 0 element is replaced by a random letter in the given language
 
 - printGrid(grid, space)
 - Returns an array of strings. Each string represents a row of the puzzle that is formatted with spaces
