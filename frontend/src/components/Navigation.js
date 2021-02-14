@@ -51,7 +51,7 @@ const Navigation = () => {
 					})}
 				</ul>
 
-				<ul className='drop-links' ref={dropMenuRef}>
+				<ul className='drop-links' ref={dropMenuRef} onClick={toggleMenu}>
 					{drops.map((drop) => {
 						const { id, url, text } = drop
 						return (
