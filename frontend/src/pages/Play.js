@@ -10,7 +10,7 @@ const Play = () => {
 			<div className='play'>
 				<Wordsearch />
 				<Words />
-				<Message />
+				<Message message={'message'} />
 				<Shuffle />
 			</div>
 		</section>

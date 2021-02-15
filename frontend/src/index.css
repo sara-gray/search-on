@@ -383,20 +383,61 @@ nav {
 	display: grid;
 	grid-template-columns: 8fr 2fr;
 	justify-content: center;
-	align-items: center;
 }
+
 .wordsearch {
-	background-color: #8ca0ff;
+	padding: 1rem;
+}
+.word-grid {
+	padding: 1rem;
+	margin: 0 1rem;
+	background-color: var(--clr-grey-light);
+	box-shadow: var(--dark-shadow);
+	display: grid;
+	justify-content: center;
+}
+.word-grid .row {
+	position: relative;
+	display: flex;
+	/* margin-bottom: 0.5rem; */
+}
+.word-grid .letter {
+	width: 2rem;
+	text-align: center;
+	/* border: 1px solid var(--clr-primary-dark); */
+	border-radius: 5px;
+	margin: 0.1rem;
+	font-size: larger;
+	cursor: pointer;
+	background-color: transparent;
+}
+
+.word-grid .letter.selected {
+	background-color: var(--clr-primary-light);
 }
 
 .words {
-	background-color: #ffa08c;
+	background-color: transparent;
+	/* text-decoration: line-through; */
+	padding: 3rem 1rem;
+}
+.words .word {
+	text-align: center;
 }
 
 .message {
-	background-color: #ffff64;
+	background: transparent;
+	padding: 0.5rem 1rem;
+	border-radius: 5px;
+}
+.message.danger {
+	background: var(--clr-red-light);
+}
+.message.success {
+	background: var(--clr-green-light);
 }
 
 .shuffle {
 	background-color: #8cffa0;
+	display: none;
 }

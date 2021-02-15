@@ -1,6 +1,8 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
+import { useGlobalContext } from './context/context'
+
 import Navigation from './components/Navigation'
 import Home from './pages/Home'
 import Info from './pages/Info'
@@ -11,6 +13,10 @@ import Edit from './pages/Edit'
 import Error from './pages/Error'
 
 function App() {
+	const { loading } = useGlobalContext()
+
+	if (loading) return <h1>Loading...</h1>
+
 	return (
 		<Router>
 			<Navigation />
