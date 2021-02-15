@@ -373,3 +373,30 @@ nav {
 .card:hover {
 	background-color: var(--clr-primary-light);
 }
+
+/* PLAY */
+.play {
+	position: relative;
+	display: grid;
+	min-height: 400px;
+
+	display: grid;
+	grid-template-columns: 8fr 2fr;
+	justify-content: center;
+	align-items: center;
+}
+.wordsearch {
+	background-color: #8ca0ff;
+}
+
+.words {
+	background-color: #ffa08c;
+}
+
+.message {
+	background-color: #ffff64;
+}
+
+.shuffle {
+	background-color: #8cffa0;
+}

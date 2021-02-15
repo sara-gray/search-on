@@ -14,7 +14,7 @@ const Wordsearch = () => {
 	let lines = wordsearch.printGrid(puzzleGrid)
 
 	return (
-		<div>
+		<div className='wordsearch'>
 			<h3>Current wordsearch</h3>
 			{lines.map((row, index) => {
 				return <p key={index}>{row}</p>

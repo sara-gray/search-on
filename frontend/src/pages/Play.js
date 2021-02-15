@@ -1,10 +1,19 @@
 import React from 'react'
+import Wordsearch from '../components/Wordsearch'
+import Words from '../components/Words'
+import Message from '../components/Message'
+import Shuffle from '../components/Shuffle'
 
 const Play = () => {
 	return (
-		<div>
-			<h1 style={{ textAlign: 'center' }}>Play</h1>
-		</div>
+		<section className='section'>
+			<div className='play'>
+				<Wordsearch />
+				<Words />
+				<Message />
+				<Shuffle />
+			</div>
+		</section>
 	)
 }
 
