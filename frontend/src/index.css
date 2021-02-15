@@ -28,6 +28,7 @@ Variables
 	--radius: 0.25rem;
 	--light-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 	--dark-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+	--dark-popout: 5px 5px 15px rgba(0, 0, 0, 0.4);
 	--max-width: 1170px;
 	--nav-height: 70px;
 	--fixed-width: 620px;
@@ -236,3 +237,100 @@ nav {
 		display: none;
 	}
 }
+
+/* BUTTONS */
+
+.btn {
+	font-size: 1rem;
+	padding: 0.25rem 0.75rem;
+	border-radius: var(--radius);
+	border-color: transparent;
+	cursor: pointer;
+	transition: var(--transition);
+	margin: 0.1rem;
+}
+.btn:hover {
+	background: red;
+}
+.btn.primary {
+	color: var(--clr-grey-light);
+	background: var(--clr-primary-mid);
+}
+.btn.black {
+	color: var(--clr-grey-light);
+	background: var(--clr-black);
+}
+
+/* HERO */
+.hero::before {
+	content: '';
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+}
+
+.hero {
+	position: relative;
+	min-height: 100vh;
+	margin-top: -5rem;
+	display: grid;
+	grid-template-columns: 1fr;
+	justify-items: center;
+	border: 5px solid yellow;
+}
+.hero-image1 {
+	background: url('./assets/wordcloud1.svg');
+}
+.hero-image2 {
+	background: url('./assets/wordcloud2.svg');
+}
+.hero-image3 {
+	background: url('./assets/wordcloud3.svg');
+}
+.hero-image4 {
+	background: url('./assets/wordcloud4.svg');
+}
+.hero-image5 {
+	background: url('./assets/wordcloud5.svg');
+}
+.hero-image6 {
+	background: url('./assets/wordcloud6.svg');
+}
+.hero-image1,
+.hero-image2,
+.hero-image3,
+.hero-image4,
+.hero-image5,
+.hero-image6 {
+	background-size: cover;
+	background-repeat: no-repeat;
+	z-index: -999;
+}
+
+.hero-center {
+	position: relative;
+	top: var(--nav-height);
+	width: 90vw;
+	max-width: var(--max-width);
+	display: grid;
+	align-items: center;
+}
+
+.hero-info {
+	background-color: var(--clr-primary-light);
+	text-transform: none;
+	max-width: 50vw;
+	margin-bottom: 2rem;
+	padding: 1rem;
+	border-radius: 10px;
+	box-shadow: var(--dark-popout);
+}
+.hero-info p {
+	line-height: 1.8;
+	color: var(--clr-grey-dark);
+}
+/* .hero-info .btn:hover {
+	border: 2px red solid;
+} */
