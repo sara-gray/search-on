@@ -16,8 +16,9 @@ const initialState = {
 
 	id: 1,
 	title: 'Random animals',
-	words: ['ant', 'monkey', 'cat', 'dog', 'eagle'],
-	size: { x: 10, y: 10 },
+	// words: ['ant', 'monkey', 'cat', 'dog', 'eagle'],
+	words: ['cat', 'dog'],
+	size: { x: 5, y: 5 },
 	language: 'en',
 	puzzleGrid: [],
 	answerGrid: [],

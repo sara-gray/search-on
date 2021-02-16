@@ -20,6 +20,7 @@ Variables
 	--clr-grey-standard: hsl(210, 22%, 49%);
 	--clr-grey-light: hsl(210, 36%, 96%);
 
+	--clr-disabled: hsl(213, 7%, 71%);
 	--clr-white: #fff;
 	--clr-red-dark: hsl(360, 67%, 44%);
 	--clr-red-light: hsl(360, 71%, 66%);
@@ -380,7 +381,7 @@ nav {
 .play {
 	position: relative;
 	display: grid;
-	min-height: 400px;
+	min-height: 45vh;
 
 	display: grid;
 	grid-template-columns: 8fr 2fr;
@@ -397,6 +398,7 @@ nav {
 	box-shadow: var(--dark-shadow);
 	display: grid;
 	justify-content: center;
+	min-height: 40vh;
 }
 .word-grid .row {
 	position: relative;
@@ -405,7 +407,6 @@ nav {
 .word-grid .letter {
 	width: 2rem;
 	text-align: center;
-	/* border: 1px solid var(--clr-primary-dark); */
 	border-radius: 5px;
 	margin: 0.1rem;
 	font-size: larger;
@@ -416,14 +417,20 @@ nav {
 .word-grid .letter.selected {
 	background-color: var(--clr-primary-light);
 }
-
+.word-grid .letter.found {
+	background-color: var(--clr-green-dark);
+}
 .words {
 	background-color: transparent;
-	/* text-decoration: line-through; */
 	padding: 3rem 1rem;
 }
 .words .word {
 	text-align: center;
+}
+
+.words .word.found {
+	text-decoration: line-through;
+	color: var(--clr-disabled);
 }
 
 .message {

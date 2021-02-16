@@ -9,8 +9,24 @@ const Row = ({ row, rowIndex }) => {
 		setMessage,
 		addToGuess,
 		correctGuess,
-		resetGame,
+		gameReset,
 	} = useGlobalContext()
+
+	const switchClass = (from, to) => {
+		const grid = document.getElementsByClassName(`letter ${from}`)
+		let gridIds = []
+		for (let i = 0; i < grid.length; i++) {
+			gridIds = [...gridIds, grid[i].id]
+		}
+
+		gridIds.forEach((id) => {
+			const letter = document.getElementById(id)
+			if (letter != null) {
+				letter.classList.toggle(from)
+				if (to !== '') letter.classList.toggle(to)
+			}
+		})
+	}
 
 	const handleClick = (e) => {
 		const highlighted = e.target.classList.contains('selected')
@@ -32,16 +48,15 @@ const Row = ({ row, rowIndex }) => {
 						item.length == guessing.length &&
 						item.toLowerCase() === guessing.toLowerCase()
 				)
+				e.target.classList.toggle('selected')
 				if (found.length > 0) {
-					correctGuess()
-					if (numberGuessed === words.length) {
-						console.log('You are amazing!')
-						resetGame()
+					switchClass('selected', 'found')
+					if (numberGuessed === words.length - 1) {
+						switchClass('found', '')
+						gameReset()
+					} else {
+						correctGuess()
 					}
-					// yes, change highlight to 'found' class
-					// strike through word
-				} else {
-					e.target.classList.toggle('selected')
 				}
 			} else {
 				setMessage('Not a valid letter', 'danger')
