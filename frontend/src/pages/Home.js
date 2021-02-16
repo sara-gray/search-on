@@ -15,6 +15,10 @@ const Home = () => {
 						<strong>Education</strong>: Create and distribute wordsearches to
 						you students
 					</p>
+					<p>
+						<strong>Gaming</strong>: Just enjoy creating and playing your own
+						wordsearches. Share them with friends and family!
+					</p>
 					<button className='btn primary'>
 						<Link to='/login'>Login</Link>
 					</button>
