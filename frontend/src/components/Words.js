@@ -2,11 +2,13 @@ import React from 'react'
 import { useGlobalContext } from '../context/context'
 
 const Words = () => {
-	const { current } = useGlobalContext()
+	const { words, numberGuessed } = useGlobalContext()
+	const leftToGuess = words.length - numberGuessed
 
 	return (
 		<ul className='words'>
-			{current.words.map((word, index) => {
+			<h4>{leftToGuess} words to guess:</h4>
+			{words.map((word, index) => {
 				return (
 					<li className='word' key={index}>
 						{word}

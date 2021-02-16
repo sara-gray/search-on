@@ -10,6 +10,7 @@ const Play = () => {
 	const { generateWordsearch } = useGlobalContext()
 
 	useEffect(() => {
+		// Move this into Save Wordsearch
 		generateWordsearch()
 	}, [])
 

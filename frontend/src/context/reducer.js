@@ -1,10 +1,17 @@
 import wordsearch from 'wordsearch-generator'
-import { GENERATE_WORDSEARCH } from './types'
+import {
+	MESSAGE_CLEAR,
+	MESSAGE_SET,
+	WORDSEARCH_INCREASE_GUESSED,
+	WORDSEARCH_GENERATE,
+	WORDSEARCH_SET_GUESS,
+	GAME_RESET,
+} from './types'
 
 const reducer = (state, action) => {
 	switch (action.type) {
-		case GENERATE_WORDSEARCH:
-			const { words, size, language } = state.current
+		case WORDSEARCH_GENERATE:
+			const { words, size, language } = state
 			const newAnswerGrid = wordsearch.createPuzzle(
 				size.x,
 				size.y,
@@ -14,14 +21,36 @@ const reducer = (state, action) => {
 			const newPuzzleGrid = wordsearch.hideWords(newAnswerGrid, language)
 			return {
 				...state,
-				current: {
-					...state.current,
-					puzzleGrid: newPuzzleGrid,
-					answerGrid: newAnswerGrid,
-				},
+				puzzleGrid: newPuzzleGrid,
+				answerGrid: newAnswerGrid,
 			}
+		case WORDSEARCH_SET_GUESS:
+			return {
+				...state,
+				guess: action.payload,
+			}
+		case WORDSEARCH_INCREASE_GUESSED:
+			return {
+				...state,
+				numberGuessed: state.numberGuessed + 1,
+				wordsGuessed: [...state.wordsGuessed, state.guess],
+				guess: '',
+			}
+		case GAME_RESET:
+			return {
+				...state,
+				numberGuessed: 0,
+				guess: '',
+				wordsGuessed: [],
+			}
+
+		case MESSAGE_CLEAR:
+			return { ...state, message: {} }
+		case MESSAGE_SET:
+			return { ...state, message: action.payload }
+
 		default:
-			return { ...state }
+			throw new Error('No matching action type')
 	}
 }
 

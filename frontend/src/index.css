@@ -263,15 +263,17 @@ nav {
 }
 .btn.primary {
 	background: var(--clr-primary-mid);
+	color: var(--clr-grey-light);
 }
 .btn.primary a {
 	color: var(--clr-grey-light);
 }
 
 .btn:hover {
-	color: var(--clr-primary-mid);
+	color: var(--clr-primary-light);
 }
 .btn.primary:hover {
+	color: var(--clr-grey-dark);
 	background-color: var(--clr-secondary-mid);
 }
 
@@ -386,7 +388,7 @@ nav {
 }
 
 .wordsearch {
-	padding: 1rem;
+	padding: 1rem 0;
 }
 .word-grid {
 	padding: 1rem;
@@ -425,18 +427,18 @@ nav {
 }
 
 .message {
-	background: transparent;
+	/* background: transparent; */
 	padding: 0.5rem 1rem;
 	border-radius: 5px;
+	margin: 0 1rem;
 }
 .message.danger {
 	background: var(--clr-red-light);
+	color: var(--clr-white);
 }
 .message.success {
 	background: var(--clr-green-light);
 }
 
 .shuffle {
-	background-color: #8cffa0;
-	display: none;
 }

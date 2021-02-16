@@ -1,29 +1,59 @@
 import React, { useState, useContext, useReducer, useEffect } from 'react'
-import cartItems from './data'
 import reducer from './reducer'
-import { GENERATE_WORDSEARCH } from './types'
+import {
+	MESSAGE_CLEAR,
+	MESSAGE_SET,
+	WORDSEARCH_GENERATE,
+	WORDSEARCH_SET_GUESS,
+	WORDSEARCH_INCREASE_GUESSED,
+	GAME_RESET,
+} from './types'
 
 const AppContext = React.createContext()
 
 const initialState = {
 	loading: false,
-	current: {
-		id: 1,
-		title: 'Random animals',
-		words: ['ant', 'monkey', 'cat', 'dog', 'bald eagle'],
-		size: { x: 10, y: 10 },
-		language: 'en',
-		puzzleGrid: [],
-		answerGrid: [],
-	},
-	message: { text: 'this is my default message', status: 'success' },
+
+	id: 1,
+	title: 'Random animals',
+	words: ['ant', 'monkey', 'cat', 'dog', 'eagle'],
+	size: { x: 10, y: 10 },
+	language: 'en',
+	puzzleGrid: [],
+	answerGrid: [],
+
+	guess: '',
+	numberGuessed: 0,
+	wordsGuessed: [],
+
+	message: {},
 }
 
 const AppProvider = ({ children }) => {
 	const [state, dispatch] = useReducer(reducer, initialState)
 
+	// Play actions
 	const generateWordsearch = () => {
-		dispatch({ type: GENERATE_WORDSEARCH })
+		dispatch({ type: WORDSEARCH_GENERATE })
+	}
+	const addToGuess = (guess) => {
+		dispatch({ type: WORDSEARCH_SET_GUESS, payload: guess })
+	}
+	const correctGuess = () => {
+		setMessage('Well done, you found a word!', 'success')
+		dispatch({ type: WORDSEARCH_INCREASE_GUESSED })
+	}
+	const gameReset = () => {
+		setMessage('Game over!', 'success')
+		dispatch({ type: GAME_RESET })
+	}
+
+	// Message actions
+	const clearMessage = () => {
+		dispatch({ type: MESSAGE_CLEAR })
+	}
+	const setMessage = (text, status = 'success') => {
+		dispatch({ type: MESSAGE_SET, payload: { text, status } })
 	}
 
 	return (
@@ -31,6 +61,11 @@ const AppProvider = ({ children }) => {
 			value={{
 				...state,
 				generateWordsearch,
+				addToGuess,
+				correctGuess,
+				gameReset,
+				clearMessage,
+				setMessage,
 			}}>
 			{children}
 		</AppContext.Provider>
