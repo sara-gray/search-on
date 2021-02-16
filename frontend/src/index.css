@@ -399,7 +399,6 @@ nav {
 .word-grid .row {
 	position: relative;
 	display: flex;
-	/* margin-bottom: 0.5rem; */
 }
 .word-grid .letter {
 	width: 2rem;
