@@ -8,7 +8,7 @@ import {
 	GAME_ADD_CLICK,
 	GAME_CLEAR_CLICK,
 	GAME_SET_GUESS,
-	GAME_INCREASE_GUESSED,
+	GAME_FOUND_WORD,
 } from './types'
 
 const AppContext = React.createContext()
@@ -28,6 +28,7 @@ const initialState = {
 	guess: '',
 	guessId: [],
 	numberGuessed: 0,
+	wordsAvailable: [],
 	wordsGuessed: [],
 
 	message: {},
@@ -51,12 +52,12 @@ const AppProvider = ({ children }) => {
 	const addToGuess = (guess) => {
 		dispatch({ type: GAME_SET_GUESS, payload: guess })
 	}
-	const correctGuess = () => {
+	const foundWord = (word) => {
 		setMessage('Well done, you found a word!', 'success')
-		dispatch({ type: GAME_INCREASE_GUESSED })
+		dispatch({ type: GAME_FOUND_WORD, payload: word })
 	}
-	const gameReset = () => {
-		setMessage('Game over!', 'success')
+	const gameReset = (message) => {
+		setMessage(message, 'success')
 		dispatch({ type: GAME_RESET })
 	}
 
@@ -76,7 +77,7 @@ const AppProvider = ({ children }) => {
 				addToClickHistory,
 				clearClickHistory,
 				addToGuess,
-				correctGuess,
+				foundWord,
 				gameReset,
 				clearMessage,
 				setMessage,

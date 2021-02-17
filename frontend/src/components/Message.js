@@ -6,17 +6,17 @@ const Message = () => {
 	const [timeID, setTimeID] = useState(null)
 
 	const setToastTimer = () => {
-		const id = setTimeout(() => {
-			clearMessage()
-		}, 5000)
-		setTimeID(id)
+		// const id = setTimeout(() => {
+		// 	clearMessage()
+		// }, 5000)
+		// setTimeID(id)
 	}
 	useEffect(() => {
 		if (message) setToastTimer()
-		return () => {
-			if (timeID) clearTimeout(timeID)
-			setTimeID(null)
-		}
+		// return () => {
+		// 	if (timeID) clearTimeout(timeID)
+		// 	setTimeID(null)
+		// }
 	}, [message])
 
 	return <div className={`message ${message.status}`}>{message.text}</div>

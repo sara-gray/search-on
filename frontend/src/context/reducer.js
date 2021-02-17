@@ -5,9 +5,9 @@ import {
 	WORDSEARCH_GENERATE,
 	GAME_RESET,
 	GAME_SET_GUESS,
-	GAME_INCREASE_GUESSED,
 	GAME_ADD_CLICK,
 	GAME_CLEAR_CLICK,
+	GAME_FOUND_WORD,
 } from './types'
 
 const reducer = (state, action) => {
@@ -31,11 +31,14 @@ const reducer = (state, action) => {
 				...state,
 				guess: action.payload,
 			}
-		case GAME_INCREASE_GUESSED:
+		case GAME_FOUND_WORD:
+			const foundWord = action.payload
 			return {
 				...state,
-				numberGuessed: state.numberGuessed + 1,
-				wordsGuessed: [...state.wordsGuessed, state.guess],
+				wordsAvailable: state.wordsAvailable.filter(
+					(word) => word !== foundWord
+				),
+				wordsGuessed: [...state.wordsGuessed, foundWord],
 				guess: '',
 			}
 		case GAME_ADD_CLICK:
@@ -50,12 +53,15 @@ const reducer = (state, action) => {
 				guess: '',
 			}
 		case GAME_RESET:
+			const wordsUpperCase = state.words.map((word) => {
+				return word.toUpperCase()
+			})
 			return {
 				...state,
 				guess: '',
 				guessId: [],
+				wordsAvailable: wordsUpperCase,
 				wordsGuessed: [],
-				numberGuessed: 0,
 			}
 
 		case MESSAGE_CLEAR:

@@ -7,11 +7,12 @@ import Message from '../components/Message'
 import Shuffle from '../components/Shuffle'
 
 const Play = () => {
-	const { generateWordsearch } = useGlobalContext()
+	const { generateWordsearch, gameReset } = useGlobalContext()
 
 	useEffect(() => {
 		// Move this into Save Wordsearch
 		generateWordsearch()
+		gameReset("Let's play!")
 	}, [])
 
 	return (

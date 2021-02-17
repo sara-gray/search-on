@@ -5,10 +5,11 @@ const Row = ({ row, rowIndex }) => {
 	const {
 		words,
 		guess,
-		numberGuessed,
+		wordsAvailable,
+		wordsGuessed,
 		setMessage,
 		addToGuess,
-		correctGuess,
+		foundWord,
 		gameReset,
 		clearClickHistory,
 		addToClickHistory,
@@ -30,6 +31,21 @@ const Row = ({ row, rowIndex }) => {
 		})
 	}
 
+	const searchForWord = (guess) => {
+		if (guess === null || guess === '' || guess === undefined) return null
+
+		let matches = wordsAvailable.filter((word) => word.includes(guess))
+		if (matches.length !== 0) {
+			return { search: guess, matched: guess, matches: [...matches] }
+		} else {
+			let guessReversed = guess.split('').reverse().join('')
+			matches = wordsAvailable.filter((word) => word.includes(guessReversed))
+			if (matches.length !== 0) {
+				return { search: guessReversed, matched: guess, matches: [...matches] }
+			} else return null
+		}
+	}
+
 	const handleClick = (e) => {
 		const highlighted = e.target.classList.contains('selected')
 		const letter = e.target.innerHTML
@@ -39,30 +55,25 @@ const Row = ({ row, rowIndex }) => {
 			clearClickHistory()
 			switchClass('selected', '')
 		} else {
-			let guessing = guess + letter
-			const possibleMatches = words.filter((word) =>
-				word.includes(guessing.toLowerCase(guessing))
-			)
-
-			if (possibleMatches.length !== 0) {
-				addToGuess(guessing)
+			const searching = searchForWord(guess + letter)
+			if (searching !== null) {
+				// This guess is part of a valid word from the word available
+				const { search, matched, matches } = searching
+				addToGuess(search)
 				addToClickHistory(id)
 
-				const found = possibleMatches.filter(
-					(item) =>
-						item.length == guessing.length &&
-						item.toLowerCase() === guessing.toLowerCase()
-				)
+				const foundIndex = matches.indexOf(matched)
 
 				e.target.classList.toggle('selected')
-
-				if (found.length > 0) {
+				if (foundIndex !== -1) {
+					// Found complete word
 					switchClass('selected', 'found')
-					if (numberGuessed === words.length - 1) {
+					foundWord(matches[foundIndex])
+					if (wordsGuessed.length === words.length - 1) {
+						// Found them all!
 						switchClass('found', '')
-						gameReset()
+						gameReset('Well done, you have found them all!')
 					} else {
-						correctGuess()
 						clearClickHistory()
 					}
 				}

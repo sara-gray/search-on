@@ -2,12 +2,11 @@ import React from 'react'
 import { useGlobalContext } from '../context/context'
 
 const Words = () => {
-	const { words, numberGuessed, wordsGuessed } = useGlobalContext()
-	const leftToGuess = words.length - numberGuessed
+	const { words, wordsAvailable, wordsGuessed } = useGlobalContext()
 
 	return (
 		<ul className='words'>
-			<h4>{leftToGuess} words to guess:</h4>
+			<h4>{wordsAvailable.length} words to guess:</h4>
 			{words.map((word, index) => {
 				const found = wordsGuessed.find(
 					(item) => item.toLowerCase() === word.toLowerCase()
