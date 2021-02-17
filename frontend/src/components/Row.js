@@ -16,9 +16,11 @@ const Row = ({ row, rowIndex }) => {
 		setMessage,
 		addToGuess,
 		foundWord,
+		celebrateOn,
 		gameReset,
 		clearClickHistory,
 		addToClickHistory,
+		setDirection,
 	} = useGlobalContext()
 
 	const switchClass = (from, to) => {
@@ -55,46 +57,42 @@ const Row = ({ row, rowIndex }) => {
 	const checkValidClick = (id) => {
 		if (guess.length === 0) return true
 		let clickRow, clickColumn
-		const splitClickId = id.split('')
-		if (splitClickId.length === 1) {
+		if (id.length === 1) {
 			clickRow = 0
-			clickColumn = Number(splitClickId[0])
+			clickColumn = Number(id[0])
 		} else {
-			clickRow = Number(splitClickId[0])
-			clickColumn = Number(splitClickId[1])
+			clickRow = Number(id[0])
+			clickColumn = Number(id[1])
 		}
 
 		let lastRow, lastColumn, lastId
 		lastId = guessId[guessId.length - 1]
-		const splitLastId = lastId[0].split('')
-		if (splitLastId.length === 1) {
+		if (lastId.length === 1) {
 			lastRow = 0
-			lastColumn = Number(splitLastId[0])
+			lastColumn = Number(lastId[0])
 		} else {
-			lastRow = Number(splitLastId[0])
-			lastColumn = Number(splitLastId[1])
+			lastRow = Number(lastId[0])
+			lastColumn = Number(lastId[1])
 		}
 
 		let rowDiff = Math.abs(lastRow - clickRow)
 		let columnDiff = Math.abs(lastColumn - clickColumn)
+
 		if (rowDiff > 1 || columnDiff > 1) return false
 
-		if (direction === '') {
-			// second click, set direction
-			if (rowDiff === 1) direction = VERTICAL
-			if (columnDiff === 1) direction = HORIZONTAL
-			if (rowDiff === 1 && columnDiff === 1) direction = DIAGONAL
+		let currentDirection = direction
+		if (currentDirection === '') {
+			if (rowDiff === 1) currentDirection = VERTICAL
+			if (columnDiff === 1) currentDirection = HORIZONTAL
+			if (rowDiff === 1 && columnDiff === 1) currentDirection = DIAGONAL
+			setDirection(currentDirection)
 		} else {
-			if (rowDiff === 1 && direction !== VERTICAL) return false
-			if (columnDiff === 1 && direction !== HORIZONTAL) return false
-			if (rowDiff === 1 && columnDiff === 1 && direction !== DIAGONAL)
+			if (rowDiff === 1 && currentDirection === HORIZONTAL) return false
+			if (columnDiff === 1 && currentDirection === VERTICAL) return false
+			if (rowDiff === 1 && columnDiff === 1 && currentDirection !== DIAGONAL)
 				return false
 		}
-
 		return true
-
-		// is it next to last click?
-		// check it is in allowed direction?
 	}
 
 	const handleClick = (e) => {
@@ -107,9 +105,8 @@ const Row = ({ row, rowIndex }) => {
 			switchClass('selected', '')
 		} else {
 			const searching = searchForWord(guess + letter)
-			if (!checkValidClick(id)) return
-			if (searching !== null) {
-				// This guess is part of a valid word from the words available and the click is next to the previous one
+			if (checkValidClick(id) && searching !== null) {
+				// This guess is part of a valid word from the words available and the click is next to the previous one in the correct direction
 				const { search, matched, matches } = searching
 				addToGuess(search)
 				addToClickHistory(id)
@@ -124,6 +121,7 @@ const Row = ({ row, rowIndex }) => {
 					if (wordsGuessed.length === words.length - 1) {
 						// Found them all!
 						switchClass('found', '')
+						celebrateOn()
 						gameReset('Well done, you have found them all!')
 					} else {
 						clearClickHistory()

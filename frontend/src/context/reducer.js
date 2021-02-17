@@ -8,6 +8,9 @@ import {
 	GAME_ADD_CLICK,
 	GAME_CLEAR_CLICK,
 	GAME_FOUND_WORD,
+	GAME_SET_DIRECTION,
+	GAME_CELEBRATE_ON,
+	GAME_CELEBRATE_OFF,
 } from './types'
 
 const reducer = (state, action) => {
@@ -40,6 +43,7 @@ const reducer = (state, action) => {
 				),
 				wordsGuessed: [...state.wordsGuessed, foundWord],
 				guess: '',
+				direction: '',
 			}
 		case GAME_ADD_CLICK:
 			return {
@@ -52,6 +56,21 @@ const reducer = (state, action) => {
 				guess: '',
 				guessId: [],
 				direction: '',
+			}
+		case GAME_SET_DIRECTION:
+			return {
+				...state,
+				direction: action.payload,
+			}
+		case GAME_CELEBRATE_ON:
+			return {
+				...state,
+				celebrate: true,
+			}
+		case GAME_CELEBRATE_OFF:
+			return {
+				...state,
+				celebrate: false,
 			}
 		case GAME_RESET:
 			const wordsUpperCase = state.words.map((word) => {

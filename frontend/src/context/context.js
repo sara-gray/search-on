@@ -8,6 +8,9 @@ import {
 	GAME_ADD_CLICK,
 	GAME_CLEAR_CLICK,
 	GAME_SET_GUESS,
+	GAME_SET_DIRECTION,
+	GAME_CELEBRATE_ON,
+	GAME_CELEBRATE_OFF,
 	GAME_FOUND_WORD,
 } from './types'
 
@@ -30,6 +33,7 @@ const initialState = {
 	direction: '',
 	wordsAvailable: [],
 	wordsGuessed: [],
+	celebrate: false,
 
 	message: {},
 }
@@ -59,6 +63,12 @@ const AppProvider = ({ children }) => {
 		setMessage('Well done, you found a word!', 'success')
 		dispatch({ type: GAME_FOUND_WORD, payload: word })
 	}
+	const celebrateOn = () => {
+		dispatch({ type: GAME_CELEBRATE_ON })
+	}
+	const celebrateOff = () => {
+		dispatch({ type: GAME_CELEBRATE_OFF })
+	}
 	const gameReset = (message) => {
 		setMessage(message, 'success')
 		dispatch({ type: GAME_RESET })
@@ -81,6 +91,9 @@ const AppProvider = ({ children }) => {
 				clearClickHistory,
 				addToGuess,
 				foundWord,
+				setDirection,
+				celebrateOn,
+				celebrateOff,
 				gameReset,
 				clearMessage,
 				setMessage,
@@ -89,7 +102,7 @@ const AppProvider = ({ children }) => {
 		</AppContext.Provider>
 	)
 }
-// make sure use
+
 export const useGlobalContext = () => {
 	return useContext(AppContext)
 }
