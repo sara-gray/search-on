@@ -46,6 +46,29 @@ const Row = ({ row, rowIndex }) => {
 		}
 	}
 
+	const checkValidClick = (id) => {
+		let clickRow, clickColumn
+		// is it the first letter in guess? return true
+		switch (guess.length) {
+			case 0:
+				return true
+			case 1:
+				debugger
+				if (id.length === 1) {
+					clickRow = 0
+					clickColumn = Number(id)
+				} else {
+				}
+				console.log(clickRow, clickColumn)
+				return true
+		}
+
+		return false
+
+		// is it next to last click?
+		// check it is in allowed direction?
+	}
+
 	const handleClick = (e) => {
 		const highlighted = e.target.classList.contains('selected')
 		const letter = e.target.innerHTML
@@ -56,9 +79,9 @@ const Row = ({ row, rowIndex }) => {
 			switchClass('selected', '')
 		} else {
 			const searching = searchForWord(guess + letter)
-			console.log(searching)
+			if (!checkValidClick(id)) return
 			if (searching !== null) {
-				// This guess is part of a valid word from the word available
+				// This guess is part of a valid word from the words available and the click is next to the previous one
 				const { search, matched, matches } = searching
 				addToGuess(search)
 				addToClickHistory(id)

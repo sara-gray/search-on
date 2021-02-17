@@ -27,7 +27,7 @@ const initialState = {
 
 	guess: '',
 	guessId: [],
-	numberGuessed: 0,
+	direction: '',
 	wordsAvailable: [],
 	wordsGuessed: [],
 

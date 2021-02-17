@@ -49,8 +49,9 @@ const reducer = (state, action) => {
 		case GAME_CLEAR_CLICK:
 			return {
 				...state,
-				guessId: [],
 				guess: '',
+				guessId: [],
+				direction: '',
 			}
 		case GAME_RESET:
 			const wordsUpperCase = state.words.map((word) => {
@@ -60,6 +61,7 @@ const reducer = (state, action) => {
 				...state,
 				guess: '',
 				guessId: [],
+				direction: '',
 				wordsAvailable: wordsUpperCase,
 				wordsGuessed: [],
 			}
