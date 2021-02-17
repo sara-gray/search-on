@@ -439,6 +439,9 @@ nav {
 .word-grid .letter {
 	width: 2rem;
 	text-align: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	border-radius: 5px;
 	margin: 0.1rem;
 	font-size: larger;

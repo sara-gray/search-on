@@ -4,9 +4,11 @@ import {
 	MESSAGE_CLEAR,
 	MESSAGE_SET,
 	WORDSEARCH_GENERATE,
-	WORDSEARCH_SET_GUESS,
-	WORDSEARCH_INCREASE_GUESSED,
 	GAME_RESET,
+	GAME_ADD_CLICK,
+	GAME_CLEAR_CLICK,
+	GAME_SET_GUESS,
+	GAME_INCREASE_GUESSED,
 } from './types'
 
 const AppContext = React.createContext()
@@ -24,6 +26,7 @@ const initialState = {
 	answerGrid: [],
 
 	guess: '',
+	guessId: [],
 	numberGuessed: 0,
 	wordsGuessed: [],
 
@@ -33,16 +36,24 @@ const initialState = {
 const AppProvider = ({ children }) => {
 	const [state, dispatch] = useReducer(reducer, initialState)
 
-	// Play actions
+	// Edit actions
 	const generateWordsearch = () => {
 		dispatch({ type: WORDSEARCH_GENERATE })
 	}
+
+	// Play actions
+	const addToClickHistory = (id) => {
+		dispatch({ type: GAME_ADD_CLICK, payload: id })
+	}
+	const clearClickHistory = () => {
+		dispatch({ type: GAME_CLEAR_CLICK })
+	}
 	const addToGuess = (guess) => {
-		dispatch({ type: WORDSEARCH_SET_GUESS, payload: guess })
+		dispatch({ type: GAME_SET_GUESS, payload: guess })
 	}
 	const correctGuess = () => {
 		setMessage('Well done, you found a word!', 'success')
-		dispatch({ type: WORDSEARCH_INCREASE_GUESSED })
+		dispatch({ type: GAME_INCREASE_GUESSED })
 	}
 	const gameReset = () => {
 		setMessage('Game over!', 'success')
@@ -62,6 +73,8 @@ const AppProvider = ({ children }) => {
 			value={{
 				...state,
 				generateWordsearch,
+				addToClickHistory,
+				clearClickHistory,
 				addToGuess,
 				correctGuess,
 				gameReset,

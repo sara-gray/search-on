@@ -10,6 +10,8 @@ const Row = ({ row, rowIndex }) => {
 		addToGuess,
 		correctGuess,
 		gameReset,
+		clearClickHistory,
+		addToClickHistory,
 	} = useGlobalContext()
 
 	const switchClass = (from, to) => {
@@ -31,24 +33,29 @@ const Row = ({ row, rowIndex }) => {
 	const handleClick = (e) => {
 		const highlighted = e.target.classList.contains('selected')
 		const letter = e.target.innerHTML
+		const id = e.target.id
 
-		if (!highlighted) {
-			// Check next to another highlighted letter
-			// Assume yes!
-
+		if (highlighted) {
+			clearClickHistory()
+			switchClass('selected', '')
+		} else {
 			let guessing = guess + letter
 			const possibleMatches = words.filter((word) =>
 				word.includes(guessing.toLowerCase(guessing))
 			)
-			// What if you have words in words in your word bank? Need to cater for spaces in words array
+
 			if (possibleMatches.length !== 0) {
 				addToGuess(guessing)
+				addToClickHistory(id)
+
 				const found = possibleMatches.filter(
 					(item) =>
 						item.length == guessing.length &&
 						item.toLowerCase() === guessing.toLowerCase()
 				)
+
 				e.target.classList.toggle('selected')
+
 				if (found.length > 0) {
 					switchClass('selected', 'found')
 					if (numberGuessed === words.length - 1) {
@@ -56,16 +63,14 @@ const Row = ({ row, rowIndex }) => {
 						gameReset()
 					} else {
 						correctGuess()
+						clearClickHistory()
 					}
 				}
 			} else {
 				setMessage('Not a valid letter', 'danger')
+				clearClickHistory()
+				switchClass('selected', '')
 			}
-		} else {
-			// Remove from guess
-			// Check not in the middle of a guess
-			// Assume yes!
-			e.target.classList.remove('selected')
 		}
 	}
 

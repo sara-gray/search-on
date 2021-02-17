@@ -2,10 +2,12 @@ import wordsearch from 'wordsearch-generator'
 import {
 	MESSAGE_CLEAR,
 	MESSAGE_SET,
-	WORDSEARCH_INCREASE_GUESSED,
 	WORDSEARCH_GENERATE,
-	WORDSEARCH_SET_GUESS,
 	GAME_RESET,
+	GAME_SET_GUESS,
+	GAME_INCREASE_GUESSED,
+	GAME_ADD_CLICK,
+	GAME_CLEAR_CLICK,
 } from './types'
 
 const reducer = (state, action) => {
@@ -24,24 +26,36 @@ const reducer = (state, action) => {
 				puzzleGrid: newPuzzleGrid,
 				answerGrid: newAnswerGrid,
 			}
-		case WORDSEARCH_SET_GUESS:
+		case GAME_SET_GUESS:
 			return {
 				...state,
 				guess: action.payload,
 			}
-		case WORDSEARCH_INCREASE_GUESSED:
+		case GAME_INCREASE_GUESSED:
 			return {
 				...state,
 				numberGuessed: state.numberGuessed + 1,
 				wordsGuessed: [...state.wordsGuessed, state.guess],
 				guess: '',
 			}
+		case GAME_ADD_CLICK:
+			return {
+				...state,
+				guessId: [...state.guessId, action.payload],
+			}
+		case GAME_CLEAR_CLICK:
+			return {
+				...state,
+				guessId: [],
+				guess: '',
+			}
 		case GAME_RESET:
 			return {
 				...state,
-				numberGuessed: 0,
 				guess: '',
+				guessId: [],
 				wordsGuessed: [],
+				numberGuessed: 0,
 			}
 
 		case MESSAGE_CLEAR:
