@@ -122,7 +122,6 @@ const Row = ({ row, rowIndex }) => {
 						// Found them all!
 						switchClass('found', '')
 						celebrateOn()
-						gameReset('Well done, you have found them all!')
 					} else {
 						clearClickHistory()
 					}
