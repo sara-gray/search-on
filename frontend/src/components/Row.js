@@ -41,7 +41,7 @@ const Row = ({ row, rowIndex }) => {
 			let guessReversed = guess.split('').reverse().join('')
 			matches = wordsAvailable.filter((word) => word.includes(guessReversed))
 			if (matches.length !== 0) {
-				return { search: guessReversed, matched: guess, matches: [...matches] }
+				return { search: guess, matched: guessReversed, matches: [...matches] }
 			} else return null
 		}
 	}
@@ -56,6 +56,7 @@ const Row = ({ row, rowIndex }) => {
 			switchClass('selected', '')
 		} else {
 			const searching = searchForWord(guess + letter)
+			console.log(searching)
 			if (searching !== null) {
 				// This guess is part of a valid word from the word available
 				const { search, matched, matches } = searching
