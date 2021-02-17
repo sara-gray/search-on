@@ -2,11 +2,17 @@ import React from 'react'
 import { useGlobalContext } from '../context/context'
 
 const Row = ({ row, rowIndex }) => {
+	const HORIZONTAL = 'HORIZONTAL'
+	const VERTICAL = 'VERTICAL'
+	const DIAGONAL = 'DIAGONAL'
+
 	const {
 		words,
 		guess,
+		guessId,
 		wordsAvailable,
 		wordsGuessed,
+		direction,
 		setMessage,
 		addToGuess,
 		foundWord,
@@ -47,23 +53,45 @@ const Row = ({ row, rowIndex }) => {
 	}
 
 	const checkValidClick = (id) => {
+		if (guess.length === 0) return true
 		let clickRow, clickColumn
-		// is it the first letter in guess? return true
-		switch (guess.length) {
-			case 0:
-				return true
-			case 1:
-				debugger
-				if (id.length === 1) {
-					clickRow = 0
-					clickColumn = Number(id)
-				} else {
-				}
-				console.log(clickRow, clickColumn)
-				return true
+		const splitClickId = id.split('')
+		if (splitClickId.length === 1) {
+			clickRow = 0
+			clickColumn = Number(splitClickId[0])
+		} else {
+			clickRow = Number(splitClickId[0])
+			clickColumn = Number(splitClickId[1])
 		}
 
-		return false
+		let lastRow, lastColumn, lastId
+		lastId = guessId[guessId.length - 1]
+		const splitLastId = lastId[0].split('')
+		if (splitLastId.length === 1) {
+			lastRow = 0
+			lastColumn = Number(splitLastId[0])
+		} else {
+			lastRow = Number(splitLastId[0])
+			lastColumn = Number(splitLastId[1])
+		}
+
+		let rowDiff = Math.abs(lastRow - clickRow)
+		let columnDiff = Math.abs(lastColumn - clickColumn)
+		if (rowDiff > 1 || columnDiff > 1) return false
+
+		if (direction === '') {
+			// second click, set direction
+			if (rowDiff === 1) direction = VERTICAL
+			if (columnDiff === 1) direction = HORIZONTAL
+			if (rowDiff === 1 && columnDiff === 1) direction = DIAGONAL
+		} else {
+			if (rowDiff === 1 && direction !== VERTICAL) return false
+			if (columnDiff === 1 && direction !== HORIZONTAL) return false
+			if (rowDiff === 1 && columnDiff === 1 && direction !== DIAGONAL)
+				return false
+		}
+
+		return true
 
 		// is it next to last click?
 		// check it is in allowed direction?

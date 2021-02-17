@@ -49,6 +49,9 @@ const AppProvider = ({ children }) => {
 	const clearClickHistory = () => {
 		dispatch({ type: GAME_CLEAR_CLICK })
 	}
+	const setDirection = (direction) => {
+		dispatch({ type: GAME_SET_DIRECTION, payload: direction })
+	}
 	const addToGuess = (guess) => {
 		dispatch({ type: GAME_SET_GUESS, payload: guess })
 	}
