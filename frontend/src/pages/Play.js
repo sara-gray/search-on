@@ -8,24 +8,26 @@ import Shuffle from '../components/Shuffle'
 import Celebrate from '../components/Celebrate'
 
 const Play = () => {
-	const { generateWordsearch, gameReset, celebrate } = useGlobalContext()
+	const { generateWordsearch, gameReset } = useGlobalContext()
 
 	useEffect(() => {
 		// Move this into Save Wordsearch
 		generateWordsearch()
-		gameReset("Let's play!")
+		gameReset()
 	}, [])
 
 	return (
-		<section className='section'>
-			<div className='play'>
-				{celebrate && <Celebrate />}
-				<Wordsearch />
-				<Words />
-				<Message message={'message'} />
-				<Shuffle />
-			</div>
-		</section>
+		<>
+			<Celebrate />
+			<section className='section'>
+				<div className='play'>
+					<Wordsearch />
+					<Words />
+					{/* <Message message={'Game on'} /> */}
+					<Shuffle />
+				</div>
+			</section>
+		</>
 	)
 }
 

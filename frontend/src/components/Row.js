@@ -16,11 +16,10 @@ const Row = ({ row, rowIndex }) => {
 		setMessage,
 		addToGuess,
 		foundWord,
-		celebrateOn,
-		gameReset,
 		clearClickHistory,
 		addToClickHistory,
 		setDirection,
+		gameOver,
 	} = useGlobalContext()
 
 	const switchClass = (from, to) => {
@@ -121,7 +120,7 @@ const Row = ({ row, rowIndex }) => {
 					if (wordsGuessed.length === words.length - 1) {
 						// Found them all!
 						switchClass('found', '')
-						celebrateOn()
+						gameOver('Well done, you have found them all!')
 					} else {
 						clearClickHistory()
 					}

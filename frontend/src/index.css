@@ -178,6 +178,7 @@ nav {
 
 .drop-links {
 	position: absolute;
+	z-index: 999;
 	top: var(--nav-height);
 	left: 80vw;
 	width: 15vw;
@@ -416,7 +417,8 @@ nav {
 	min-height: 45vh;
 
 	display: grid;
-	grid-template-columns: 8fr 2fr;
+	/* grid-template-columns: 8fr 2fr; */
+	grid-template-columns: 1fr;
 	justify-content: center;
 }
 
@@ -472,7 +474,7 @@ nav {
 	/* background: transparent; */
 	padding: 0.5rem 1rem;
 	border-radius: 5px;
-	margin: 0 1rem;
+	margin: 0.2rem 1rem 0 1rem;
 }
 .message.danger {
 	background: var(--clr-red-light);
@@ -483,4 +485,11 @@ nav {
 }
 
 .shuffle {
+}
+
+@media screen and (min-width: 800px) {
+	/* Bigger screens */
+	.play {
+		grid-template-columns: 8fr 2fr;
+	}
 }

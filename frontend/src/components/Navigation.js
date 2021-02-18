@@ -5,14 +5,11 @@ import { Link } from 'react-router-dom'
 const Navigation = () => {
 	const links = [
 		{ id: 1, url: '/info', text: 'info' },
-		{ id: 2, url: '/play', text: 'play' },
-		{ id: 3, url: '/login', text: 'login' },
+		{ id: 2, url: '/login', text: 'login' },
 	]
 	const drops = [
 		{ id: 1, url: '/info', text: 'info' },
-		{ id: 2, url: '/play', text: 'play' },
-		{ id: 3, url: '/edit', text: 'edit' },
-		{ id: 4, url: '/login', text: 'login' },
+		{ id: 2, url: '/login', text: 'login' },
 	]
 	const [showLinks, setShowLinks] = useState(false)
 	const dropMenuRef = useRef(null)

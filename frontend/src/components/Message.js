@@ -1,25 +1,30 @@
 import React, { useState, useEffect } from 'react'
 import { useGlobalContext } from '../context/context'
 
-const Message = () => {
-	const { clearMessage, message } = useGlobalContext()
+const Message = ({ message }) => {
+	const { text, status } = message
+
+	const [displayMessage, setDisplayMessage] = useState(false)
 	const [timeID, setTimeID] = useState(null)
 
 	const setToastTimer = () => {
-		// const id = setTimeout(() => {
-		// 	clearMessage()
-		// }, 5000)
-		// setTimeID(id)
+		const id = setTimeout(() => {
+			setDisplayMessage(false)
+			setTimeID(null)
+		}, 3000)
+		setTimeID(id)
 	}
 	useEffect(() => {
-		if (message) setToastTimer()
-		// return () => {
-		// 	if (timeID) clearTimeout(timeID)
-		// 	setTimeID(null)
-		// }
-	}, [message])
+		setToastTimer()
+		setDisplayMessage(true)
+		return () => {
+			setDisplayMessage(false)
+			if (timeID !== null) clearTimeout(timeID)
+			setTimeID(null)
+		}
+	}, [])
 
-	return <div className={`message ${message.status}`}>{message.text}</div>
+	return displayMessage && <div className={`message ${status}`}>{text}</div>
 }
 
 export default Message

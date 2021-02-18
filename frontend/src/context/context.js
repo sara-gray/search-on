@@ -21,6 +21,8 @@ const initialState = {
 
 	id: 1,
 	title: 'Random animals',
+	private: true,
+	desc: 'A random bit of animal fun',
 	// words: ['ant', 'monkey', 'cat', 'dog', 'eagle'],
 	words: ['cat', 'dog'],
 	size: { x: 5, y: 5 },
@@ -69,9 +71,12 @@ const AppProvider = ({ children }) => {
 	const celebrateOff = () => {
 		dispatch({ type: GAME_CELEBRATE_OFF })
 	}
-	const gameReset = (message) => {
-		setMessage(message, 'success')
+	const gameReset = () => {
 		dispatch({ type: GAME_RESET })
+	}
+	const gameOver = (message) => {
+		setMessage(message)
+		celebrateOn()
 	}
 
 	// Message actions
@@ -95,6 +100,7 @@ const AppProvider = ({ children }) => {
 				celebrateOn,
 				celebrateOff,
 				gameReset,
+				gameOver,
 				clearMessage,
 				setMessage,
 			}}>
