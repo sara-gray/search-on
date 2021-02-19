@@ -417,7 +417,6 @@ nav {
 	min-height: 45vh;
 
 	display: grid;
-	/* grid-template-columns: 8fr 2fr; */
 	grid-template-columns: 1fr;
 	justify-content: center;
 }

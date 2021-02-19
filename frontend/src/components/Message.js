@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { useGlobalContext } from '../context/context'
 
-const Message = ({ message }) => {
+const Message = () => {
+	const { message } = useGlobalContext()
+
 	const { text, status } = message
 
 	const [displayMessage, setDisplayMessage] = useState(false)

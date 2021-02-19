@@ -8,7 +8,7 @@ import Shuffle from '../components/Shuffle'
 import Celebrate from '../components/Celebrate'
 
 const Play = () => {
-	const { generateWordsearch, gameReset } = useGlobalContext()
+	const { generateWordsearch, gameReset, message } = useGlobalContext()
 
 	useEffect(() => {
 		// Move this into Save Wordsearch
@@ -23,8 +23,8 @@ const Play = () => {
 				<div className='play'>
 					<Wordsearch />
 					<Words />
-					{/* <Message message={'Game on'} /> */}
 					<Shuffle />
+					<Message message={message} />
 				</div>
 			</section>
 		</>
