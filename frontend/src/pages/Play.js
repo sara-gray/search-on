@@ -1,10 +1,59 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import { useGlobalContext } from '../context/context'
 
-const Play = () => {
+import Wordsearch from '../components/Wordsearch'
+import Words from '../components/Words'
+import Celebrate from '../components/Celebrate'
+import Loading from '../components/Loading'
+import Restart from '../components/Restart'
+import CopyLink from '../components/CopyLink'
+
+const Play = ({ location }) => {
+	const {
+		loading,
+		playing,
+		generateWordsearch,
+		gameStart,
+		gameReset,
+		fetchGame,
+	} = useGlobalContext()
+
+	const [playGame, setPlayGame] = useState(null)
+
+	useEffect(() => {
+		const pages = location.pathname.split('/')
+		const gameId = pages[pages.length - 1]
+		const newGame = fetchGame(gameId)
+		setPlayGame(newGame)
+		generateWordsearch(newGame)
+		gameStart(newGame)
+		return () => {
+			gameReset()
+		}
+	}, [])
+
+	useEffect(() => {
+		if (!playing && playGame !== null) {
+			generateWordsearch(playGame)
+			gameStart(playGame)
+		}
+	}, [playing])
+
+	if (loading) return <Loading />
 	return (
-		<div>
-			<h1 style={{ textAlign: 'center' }}>Play</h1>
-		</div>
+		<>
+			<Celebrate />
+			{playing && (
+				<section className='section'>
+					<div className='play'>
+						<Wordsearch />
+						<Words />
+						<Restart />
+						<CopyLink />
+					</div>
+				</section>
+			)}
+		</>
 	)
 }
 
