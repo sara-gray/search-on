@@ -362,6 +362,7 @@ nav {
 	grid-template-columns: repeat(2, 1fr);
 	max-height: 35vh;
 	overflow-y: scroll;
+	padding: 1rem;
 }
 
 @media screen and (min-width: 800px) {
@@ -393,8 +394,8 @@ nav {
 	min-height: var(--medium-card);
 	border: transparent;
 	border-radius: 5px;
+	padding: 0.2rem;
 	margin: 0 2rem 1rem;
-	padding: 1rem;
 	cursor: pointer;
 }
 .small-card {
@@ -406,8 +407,15 @@ nav {
 .large-card {
 	min-height: var(--large-card);
 }
-.card:hover {
-	background-color: var(--clr-primary-light);
+.inner-card {
+	padding: 0.5rem;
+	border-radius: 3px;
+	height: 100%;
+	transition: all ease-in-out 200ms;
+}
+.inner-card:hover {
+	background-color: var(--clr-secondary-light);
+	transform: rotate(-2deg) translateY(-0.5rem) scale(1.02);
 }
 
 /* PLAY */
@@ -491,4 +499,18 @@ nav {
 	.play {
 		grid-template-columns: 8fr 2fr;
 	}
+}
+
+.loading {
+	display: flex;
+	height: 100vh;
+	width: 100vw;
+	margin: 0 auto;
+	align-items: center;
+	justify-content: center;
+	background-color: rgba(255, 255, 255, 0.9);
+}
+.loading img {
+	width: 5rem;
+	height: 5rem;
 }

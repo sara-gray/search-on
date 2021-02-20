@@ -1,8 +1,7 @@
 import wordsearch from 'wordsearch-generator'
 import {
-	MESSAGE_CLEAR,
-	MESSAGE_SET,
 	WORDSEARCH_GENERATE,
+	GAME_START,
 	GAME_RESET,
 	GAME_SET_GUESS,
 	GAME_ADD_CLICK,
@@ -11,12 +10,21 @@ import {
 	GAME_SET_DIRECTION,
 	GAME_CELEBRATE_ON,
 	GAME_CELEBRATE_OFF,
+	FETCH_PUBLIC_REQUEST,
+	FETCH_PUBLIC_SUCCESS,
+	FETCH_PUBLIC_FAIL,
+	SET_LOADING,
+	CLEAR_LOADING,
+	FETCH_GAME_REQUEST,
+	FETCH_GAME_SUCCESS,
+	FETCH_GAME_FAIL,
 } from './types'
 
 const reducer = (state, action) => {
 	switch (action.type) {
 		case WORDSEARCH_GENERATE:
-			const { words, size, language } = state
+			const newGame = action.payload
+			const { words, size, language } = newGame
 			const newAnswerGrid = wordsearch.createPuzzle(
 				size.x,
 				size.y,
@@ -26,9 +34,39 @@ const reducer = (state, action) => {
 			const newPuzzleGrid = wordsearch.hideWords(newAnswerGrid, language)
 			return {
 				...state,
-				puzzleGrid: newPuzzleGrid,
-				answerGrid: newAnswerGrid,
+				loading: false,
+				game: {
+					...newGame,
+					puzzleGrid: [...newPuzzleGrid],
+					answerGrid: [...newAnswerGrid],
+				},
 			}
+
+		case GAME_START:
+			const wordsUpperCase = state.game.words.map((word) => {
+				const noSpaces = word.replace(/ /g, '')
+				return word.toUpperCase()
+			})
+			return {
+				...state,
+				guess: '',
+				guessId: [],
+				direction: '',
+				wordsAvailable: wordsUpperCase,
+				wordsGuessed: [],
+			}
+
+		case GAME_RESET:
+			return {
+				...state,
+				game: {},
+				guess: '',
+				guessId: [],
+				direction: '',
+				wordsAvailable: [],
+				wordsGuessed: [],
+			}
+
 		case GAME_SET_GUESS:
 			return {
 				...state,
@@ -62,6 +100,7 @@ const reducer = (state, action) => {
 				...state,
 				direction: action.payload,
 			}
+
 		case GAME_CELEBRATE_ON:
 			return {
 				...state,
@@ -72,22 +111,32 @@ const reducer = (state, action) => {
 				...state,
 				celebrate: false,
 			}
-		case GAME_RESET:
-			const wordsUpperCase = state.words.map((word) => {
-				return word.toUpperCase()
-			})
+
+		case SET_LOADING:
 			return {
 				...state,
-				guess: '',
-				guessId: [],
-				direction: '',
-				wordsAvailable: wordsUpperCase,
-				wordsGuessed: [],
+				loading: true,
+			}
+		case CLEAR_LOADING:
+			return {
+				...state,
+				loading: false,
 			}
 
-		default:
-			throw new Error('No matching action type')
+		case FETCH_PUBLIC_SUCCESS:
+			return {
+				...state,
+				loading: false,
+				publicIds: action.payload,
+			}
+		case FETCH_PUBLIC_FAIL:
+			return {
+				...state,
+				loading: false,
+			}
 	}
+	throw new Error('No matching action type', action.type)
+	return state
 }
 
 export default reducer

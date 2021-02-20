@@ -3,7 +3,9 @@ import { useGlobalContext } from '../context/context'
 import Row from './Row'
 
 const Wordsearch = () => {
-	const { title, puzzleGrid } = useGlobalContext()
+	const {
+		game: { title, puzzleGrid },
+	} = useGlobalContext()
 
 	return (
 		<div className='wordsearch'>
@@ -11,6 +13,7 @@ const Wordsearch = () => {
 			<div className='word-grid'>
 				{puzzleGrid.map((row, index) => {
 					return <Row key={index} row={row} rowIndex={index} />
+					console.log(row)
 				})}
 			</div>
 		</div>

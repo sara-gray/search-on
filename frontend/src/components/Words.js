@@ -2,7 +2,11 @@ import React from 'react'
 import { useGlobalContext } from '../context/context'
 
 const Words = () => {
-	const { words, wordsAvailable, wordsGuessed } = useGlobalContext()
+	const {
+		game: { words },
+		wordsAvailable,
+		wordsGuessed,
+	} = useGlobalContext()
 
 	return (
 		<ul className='words'>

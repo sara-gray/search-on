@@ -1,10 +1,38 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { useGlobalContext } from '../context/context'
+import Loading from '../components/Loading'
 
-const Home = () => {
+const Home = ({ history }) => {
+	const { loading, publicIds, fetchGame, fetchPublicGames } = useGlobalContext()
+	const [games, setGames] = useState([])
+
 	const MAX_HERO_IMAGES = 6
 	const randomImage =
 		Math.floor(Math.random() * Math.floor(MAX_HERO_IMAGES)) + 1
+
+	useEffect(() => {
+		fetchPublicGames()
+		let newGames = []
+		publicIds.map((id) => {
+			let nextGame = fetchGame(id)
+			newGames.push(nextGame)
+		})
+		setGames(newGames)
+		console.log(newGames)
+	}, [])
+
+	const selectPublicGame = (e) => {
+		let id
+		if (e.target.tagName === 'DIV') {
+			id = e.target.id
+		} else {
+			id = e.target.parentNode.id
+		}
+		history.push(`/play/${id}`)
+	}
+
+	if (loading) return <Loading />
 
 	return (
 		<section className={`hero hero-image${randomImage}`}>
@@ -27,11 +55,18 @@ const Home = () => {
 					</button>
 				</article>
 				<article className='hero-cards'>
-					<div className='card '>1</div>
-					<div className='card '>2</div>
-					<div className='card '>3</div>
-					<div className='card'>4</div>
-					<div className='card'>5</div>
+					{games.map((nextGame) => {
+						const { id, title, desc, size } = nextGame
+						return (
+							<div key={id} className='card' onClick={selectPublicGame}>
+								<div className='inner-card' id={id}>
+									<h4>{title}</h4>
+									<p style={{ fontSize: '0.8rem' }}>{desc}</p>
+									Grid size: {size.x} x {size.y}
+								</div>
+							</div>
+						)
+					})}
 				</article>
 			</div>
 		</section>

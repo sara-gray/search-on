@@ -9,7 +9,7 @@ const Row = ({ row, rowIndex }) => {
 	const DIAGONAL = 'DIAGONAL'
 
 	const {
-		words,
+		game: { words },
 		guess,
 		guessId,
 		wordsAvailable,
