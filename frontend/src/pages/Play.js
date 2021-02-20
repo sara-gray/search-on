@@ -6,6 +6,7 @@ import Words from '../components/Words'
 import Celebrate from '../components/Celebrate'
 import Loading from '../components/Loading'
 import Restart from '../components/Restart'
+import CopyLink from '../components/CopyLink'
 
 const Play = ({ location }) => {
 	const {
@@ -48,6 +49,7 @@ const Play = ({ location }) => {
 						<Wordsearch />
 						<Words />
 						<Restart />
+						<CopyLink />
 					</div>
 				</section>
 			)}

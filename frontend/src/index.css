@@ -406,6 +406,7 @@ nav {
 }
 .large-card {
 	min-height: var(--large-card);
+	padding: 2rem 4rem;
 }
 .inner-card {
 	padding: 0.5rem;
