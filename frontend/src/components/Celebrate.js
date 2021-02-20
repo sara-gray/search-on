@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import Confetti from 'react-confetti'
 import { useGlobalContext } from '../context/context'
-import { GAME_RESET } from '../context/types'
 
 const Celebrate = () => {
-	const { celebrateOff, celebrate, gameReset } = useGlobalContext()
+	const { celebrate, gameReset } = useGlobalContext()
 	const handleConfettiOver = () => {
-		celebrateOff()
 		gameReset()
 	}
 

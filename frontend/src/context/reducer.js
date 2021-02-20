@@ -85,11 +85,6 @@ const reducer = (state, action) => {
 				wordsGuessed: [],
 			}
 
-		case MESSAGE_CLEAR:
-			return { ...state, message: {} }
-		case MESSAGE_SET:
-			return { ...state, message: action.payload }
-
 		default:
 			throw new Error('No matching action type')
 	}

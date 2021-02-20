@@ -1,12 +1,8 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
-<<<<<<< Updated upstream
-import { useGlobalContext } from './context/context'
-=======
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
->>>>>>> Stashed changes
 
 import Navigation from './components/Navigation'
 import Home from './pages/Home'
@@ -19,20 +15,10 @@ import Error from './pages/Error'
 
 toast.configure()
 function App() {
-<<<<<<< Updated upstream
-	const { loading } = useGlobalContext()
-
-	if (loading) return <h1>Loading...</h1>
-
-=======
-	const notify = () =>
-		toast('I love my life', { position: toast.POSITION.BOTTOM_LEFT })
->>>>>>> Stashed changes
 	return (
 		<Router>
 			<Navigation />
 			<ToastContainer />
-			<button onClick={notify}>Press Me</button>
 			<Switch>
 				<Route path='/' component={Home} exact />
 				<Route path='/info' component={Info} />

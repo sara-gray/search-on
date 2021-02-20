@@ -1,8 +1,8 @@
-import React, { useState, useContext, useReducer, useEffect } from 'react'
+import React, { useContext, useReducer } from 'react'
+import { notify } from '../components/notify'
+import { toast } from 'react-toastify'
 import reducer from './reducer'
 import {
-	MESSAGE_CLEAR,
-	MESSAGE_SET,
 	WORDSEARCH_GENERATE,
 	GAME_RESET,
 	GAME_ADD_CLICK,
@@ -36,8 +36,6 @@ const initialState = {
 	wordsAvailable: [],
 	wordsGuessed: [],
 	celebrate: false,
-
-	message: {},
 }
 
 const AppProvider = ({ children }) => {
@@ -62,29 +60,19 @@ const AppProvider = ({ children }) => {
 		dispatch({ type: GAME_SET_GUESS, payload: guess })
 	}
 	const foundWord = (word) => {
-		setMessage('Well done, you found a word!', 'success')
+		notify('You have found a word!', 'INFO', {
+			position: toast.POSITION.TOP_LEFT,
+			autoClose: 3000,
+		})
 		dispatch({ type: GAME_FOUND_WORD, payload: word })
 	}
-	const celebrateOn = () => {
-		dispatch({ type: GAME_CELEBRATE_ON })
-	}
-	const celebrateOff = () => {
-		dispatch({ type: GAME_CELEBRATE_OFF })
-	}
 	const gameReset = () => {
+		dispatch({ type: GAME_CELEBRATE_OFF })
 		dispatch({ type: GAME_RESET })
 	}
-	const gameOver = (message) => {
-		setMessage(message)
-		celebrateOn()
-	}
-
-	// Message actions
-	const clearMessage = () => {
-		dispatch({ type: MESSAGE_CLEAR })
-	}
-	const setMessage = (text, status = 'success') => {
-		dispatch({ type: MESSAGE_SET, payload: { text, status } })
+	const gameOver = () => {
+		notify('Game over, yey!', 'SUCCESS')
+		dispatch({ type: GAME_CELEBRATE_ON })
 	}
 
 	return (
@@ -96,13 +84,9 @@ const AppProvider = ({ children }) => {
 				clearClickHistory,
 				addToGuess,
 				foundWord,
-				setDirection,
-				celebrateOn,
-				celebrateOff,
-				gameReset,
 				gameOver,
-				clearMessage,
-				setMessage,
+				gameReset,
+				setDirection,
 			}}>
 			{children}
 		</AppContext.Provider>

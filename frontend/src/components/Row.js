@@ -1,4 +1,6 @@
 import React from 'react'
+import { toast } from 'react-toastify'
+import { notify } from '../components/notify'
 import { useGlobalContext } from '../context/context'
 
 const Row = ({ row, rowIndex }) => {
@@ -13,13 +15,12 @@ const Row = ({ row, rowIndex }) => {
 		wordsAvailable,
 		wordsGuessed,
 		direction,
-		setMessage,
 		addToGuess,
 		foundWord,
+		gameOver,
 		clearClickHistory,
 		addToClickHistory,
 		setDirection,
-		gameOver,
 	} = useGlobalContext()
 
 	const switchClass = (from, to) => {
@@ -120,13 +121,13 @@ const Row = ({ row, rowIndex }) => {
 					if (wordsGuessed.length === words.length - 1) {
 						// Found them all!
 						switchClass('found', '')
-						gameOver('Well done, you have found them all!')
+						gameOver()
 					} else {
 						clearClickHistory()
 					}
 				}
 			} else {
-				setMessage('Not a valid letter', 'danger')
+				notify('Not a valid letter', 'WARN', { autoClose: 1000 })
 				clearClickHistory()
 				switchClass('selected', '')
 			}

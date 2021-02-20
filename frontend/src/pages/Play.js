@@ -3,12 +3,10 @@ import { useGlobalContext } from '../context/context'
 
 import Wordsearch from '../components/Wordsearch'
 import Words from '../components/Words'
-import Message from '../components/Message'
-import Shuffle from '../components/Shuffle'
 import Celebrate from '../components/Celebrate'
 
 const Play = () => {
-	const { generateWordsearch, gameReset, message } = useGlobalContext()
+	const { generateWordsearch, gameReset } = useGlobalContext()
 
 	useEffect(() => {
 		// Move this into Save Wordsearch
@@ -23,8 +21,6 @@ const Play = () => {
 				<div className='play'>
 					<Wordsearch />
 					<Words />
-					<Shuffle />
-					<Message message={message} />
 				</div>
 			</section>
 		</>
