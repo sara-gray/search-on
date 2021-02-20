@@ -17,13 +17,10 @@ const Home = ({ history }) => {
 	}, [])
 
 	useEffect(() => {
-		// console.log('ids updated', publicIds)
 		let newGames = []
 		publicIds.map((id) => {
-			// console.log(id)
 			newGames.push(fetchGame(id))
 		})
-		// console.log(newGames)
 		if (newGames.length !== 0) setGames(newGames)
 	}, [publicIds])
 

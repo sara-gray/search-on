@@ -5,11 +5,12 @@ import Wordsearch from '../components/Wordsearch'
 import Words from '../components/Words'
 import Celebrate from '../components/Celebrate'
 import Loading from '../components/Loading'
+import Restart from '../components/Restart'
 
 const Play = ({ location }) => {
 	const {
 		loading,
-		game,
+		playing,
 		generateWordsearch,
 		gameStart,
 		gameReset,
@@ -30,15 +31,23 @@ const Play = ({ location }) => {
 		}
 	}, [])
 
+	useEffect(() => {
+		if (!playing && playGame !== null) {
+			generateWordsearch(playGame)
+			gameStart(playGame)
+		}
+	}, [playing])
+
 	if (loading) return <Loading />
 	return (
 		<>
 			<Celebrate />
-			{playGame && (
+			{playing && (
 				<section className='section'>
 					<div className='play'>
 						<Wordsearch />
-						<Words />{' '}
+						<Words />
+						<Restart />
 					</div>
 				</section>
 			)}

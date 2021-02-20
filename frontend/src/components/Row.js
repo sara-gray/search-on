@@ -1,5 +1,4 @@
 import React from 'react'
-import { toast } from 'react-toastify'
 import { notify } from '../components/notify'
 import { useGlobalContext } from '../context/context'
 
@@ -127,7 +126,7 @@ const Row = ({ row, rowIndex }) => {
 					}
 				}
 			} else {
-				notify('Not a valid letter', 'WARN', { autoClose: 1000 })
+				notify('Not a valid letter', 'WARN', { autoClose: 3000 })
 				clearClickHistory()
 				switchClass('selected', '')
 			}

@@ -55,6 +55,7 @@ const reducer = (state, action) => {
 				direction: '',
 				wordsAvailable: wordsUpperCase,
 				wordsGuessed: [],
+				playing: true,
 			}
 
 		case GAME_RESET:
@@ -111,6 +112,7 @@ const reducer = (state, action) => {
 			return {
 				...state,
 				celebrate: false,
+				playing: false,
 			}
 
 		case SET_LOADING:

@@ -28,6 +28,7 @@ const AppContext = React.createContext()
 const initialState = {
 	loading: false,
 	publicIds: [],
+	playing: false,
 	game: {},
 	guess: '',
 	guessId: [],
@@ -52,6 +53,11 @@ const AppProvider = ({ children }) => {
 		notify('Game over, yey!', 'SUCCESS')
 		dispatch({ type: GAME_CELEBRATE_ON })
 	}
+	const gameRestart = () => {
+		dispatch({ type: GAME_CELEBRATE_OFF })
+		// dispatch({ type: GAME_RESET })
+	}
+
 	const setDirection = (direction) => {
 		dispatch({ type: GAME_SET_DIRECTION, payload: direction })
 	}
@@ -104,6 +110,7 @@ const AppProvider = ({ children }) => {
 				gameStart,
 				gameOver,
 				gameReset,
+				gameRestart,
 				setDirection,
 				addToClickHistory,
 				clearClickHistory,

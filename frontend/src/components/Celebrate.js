@@ -3,9 +3,9 @@ import Confetti from 'react-confetti'
 import { useGlobalContext } from '../context/context'
 
 const Celebrate = () => {
-	const { celebrate, gameReset } = useGlobalContext()
+	const { celebrate, gameRestart } = useGlobalContext()
 	const handleConfettiOver = () => {
-		gameReset()
+		gameRestart()
 	}
 
 	if (!celebrate) return <></>
