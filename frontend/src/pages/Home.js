@@ -4,23 +4,28 @@ import { useGlobalContext } from '../context/context'
 import Loading from '../components/Loading'
 
 const Home = ({ history }) => {
-	const { loading, publicIds, fetchGame, fetchPublicGames } = useGlobalContext()
-	const [games, setGames] = useState([])
+	const { loading, publicIds, fetchPublicGames, fetchGame } = useGlobalContext()
 
 	const MAX_HERO_IMAGES = 6
 	const randomImage =
 		Math.floor(Math.random() * Math.floor(MAX_HERO_IMAGES)) + 1
 
+	const [games, setGames] = useState([])
+
 	useEffect(() => {
 		fetchPublicGames()
+	}, [])
+
+	useEffect(() => {
+		// console.log('ids updated', publicIds)
 		let newGames = []
 		publicIds.map((id) => {
-			let nextGame = fetchGame(id)
-			newGames.push(nextGame)
+			// console.log(id)
+			newGames.push(fetchGame(id))
 		})
-		setGames(newGames)
-		console.log(newGames)
-	}, [])
+		// console.log(newGames)
+		if (newGames.length !== 0) setGames(newGames)
+	}, [publicIds])
 
 	const selectPublicGame = (e) => {
 		let id
@@ -55,18 +60,19 @@ const Home = ({ history }) => {
 					</button>
 				</article>
 				<article className='hero-cards'>
-					{games.map((nextGame) => {
-						const { id, title, desc, size } = nextGame
-						return (
-							<div key={id} className='card' onClick={selectPublicGame}>
-								<div className='inner-card' id={id}>
-									<h4>{title}</h4>
-									<p style={{ fontSize: '0.8rem' }}>{desc}</p>
-									Grid size: {size.x} x {size.y}
+					{games.length !== 0 &&
+						games.map((nextGame) => {
+							const { id, title, desc, size } = nextGame
+							return (
+								<div key={id} className='card' onClick={selectPublicGame}>
+									<div className='inner-card' id={id}>
+										<h4>{title}</h4>
+										<p style={{ fontSize: '0.8rem' }}>{desc}</p>
+										Grid size: {size.x} x {size.y}
+									</div>
 								</div>
-							</div>
-						)
-					})}
+							)
+						})}
 				</article>
 			</div>
 		</section>

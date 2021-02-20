@@ -13,6 +13,7 @@ const Play = ({ location }) => {
 		generateWordsearch,
 		gameStart,
 		gameReset,
+		fetchGame,
 	} = useGlobalContext()
 
 	const [playGame, setPlayGame] = useState(null)
@@ -20,10 +21,10 @@ const Play = ({ location }) => {
 	useEffect(() => {
 		const pages = location.pathname.split('/')
 		const gameId = pages[pages.length - 1]
-
-		generateWordsearch(gameId)
-		gameStart()
-		setPlayGame(game)
+		const newGame = fetchGame(gameId)
+		setPlayGame(newGame)
+		generateWordsearch(newGame)
+		gameStart(newGame)
 		return () => {
 			gameReset()
 		}
@@ -37,7 +38,7 @@ const Play = ({ location }) => {
 				<section className='section'>
 					<div className='play'>
 						<Wordsearch />
-						<Words />
+						<Words />{' '}
 					</div>
 				</section>
 			)}

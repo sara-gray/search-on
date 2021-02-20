@@ -43,9 +43,10 @@ const reducer = (state, action) => {
 			}
 
 		case GAME_START:
-			const wordsUpperCase = state.game.words.map((word) => {
+			let startGame = action.payload
+			let wordsUpperCase = startGame.words.map((word) => {
 				const noSpaces = word.replace(/ /g, '')
-				return word.toUpperCase()
+				return noSpaces.toUpperCase()
 			})
 			return {
 				...state,

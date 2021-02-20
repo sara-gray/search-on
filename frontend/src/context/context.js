@@ -41,8 +41,8 @@ const AppProvider = ({ children }) => {
 	const [state, dispatch] = useReducer(reducer, initialState)
 
 	// Play actions
-	const gameStart = () => {
-		dispatch({ type: GAME_START })
+	const gameStart = (game) => {
+		dispatch({ type: GAME_START, payload: game })
 	}
 	const gameReset = () => {
 		dispatch({ type: GAME_CELEBRATE_OFF })
@@ -83,19 +83,17 @@ const AppProvider = ({ children }) => {
 		setLoading()
 		const games = [...publicGames]
 		dispatch({ type: FETCH_PUBLIC_SUCCESS, payload: games })
+		return games
 	}
 	const fetchGame = (id) => {
-		setLoading()
 		const data = [...gameData]
 		if (data) {
-			const findGame = data.filter((game) => game.id === Number(id))
-			clearLoading()
+			const findGame = data.filter((item) => item.id === Number(id))
 			return findGame[0]
 		}
 		return null
 	}
-	const generateWordsearch = (id) => {
-		const newGame = fetchGame(id)
+	const generateWordsearch = (newGame) => {
 		dispatch({ type: WORDSEARCH_GENERATE, payload: newGame })
 	}
 
