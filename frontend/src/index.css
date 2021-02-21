@@ -431,11 +431,11 @@ nav {
 }
 
 .wordsearch {
-	padding: 1rem 0;
+	padding: 0;
 }
 .word-grid {
-	padding: 1rem;
-	margin: 0 1rem;
+	padding: 0;
+	margin: 0;
 	background-color: var(--clr-grey-light);
 	box-shadow: var(--dark-shadow);
 	display: grid;
@@ -447,14 +447,13 @@ nav {
 	display: flex;
 }
 .word-grid .letter {
-	width: 2rem;
+	width: 1rem;
 	text-align: center;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	border-radius: 5px;
-	margin: 0.1rem;
-	font-size: larger;
+	margin: 0;
 	cursor: pointer;
 	background-color: transparent;
 }
@@ -467,7 +466,7 @@ nav {
 }
 .words {
 	background-color: transparent;
-	padding: 3rem 1rem;
+	padding: 3rem 0;
 }
 .words .word {
 	text-align: center;
@@ -478,27 +477,27 @@ nav {
 	color: var(--clr-disabled);
 }
 
-.message {
-	/* background: transparent; */
-	padding: 0.5rem 1rem;
-	border-radius: 5px;
-	margin: 0.2rem 1rem 0 1rem;
-}
-.message.danger {
-	background: var(--clr-red-light);
-	color: var(--clr-white);
-}
-.message.success {
-	background: var(--clr-green-light);
-}
-
-.shuffle {
-}
-
 @media screen and (min-width: 800px) {
 	/* Bigger screens */
 	.play {
 		grid-template-columns: 8fr 2fr;
+	}
+
+	.wordsearch {
+		padding: 1rem 0;
+	}
+	.word-grid {
+		padding: 1rem;
+		margin: 0 1rem;
+	}
+	.word-grid .letter {
+		width: 2rem;
+		margin: 0.1rem;
+		font-size: larger;
+	}
+
+	.words {
+		padding: 3rem 1rem;
 	}
 }
 
