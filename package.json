@@ -1,7 +1,40 @@
 {
-  "dependencies": {
-    "create-react-app": "^4.0.2",
-    "fireworks": "^2.2.7",
-    "react": "^17.0.1"
-  }
+	"name": "search-on",
+	"version": "1.0.0",
+	"description": "Online wordsearch app",
+	"main": "server.js",
+	"type": "module",
+	"scripts": {
+		"start": "node backend/server",
+		"server": "nodemon backend/server",
+		"client": "npm start --prefix frontend",
+		"dev": "concurrently \"npm run server\" \"npm run client\"",
+		"kill": "npx kill-port 5000 && npx kill-port 3000"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/sara-gray/search-on.git"
+	},
+	"author": "Sara Gray",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/sara-gray/search-on/issues"
+	},
+	"homepage": "https://github.com/sara-gray/search-on#readme",
+	"dependencies": {
+		"bcrypt": "^5.0.1",
+		"bcryptjs": "^2.4.3",
+		"colors": "^1.4.0",
+		"concurrently": "^6.0.0",
+		"dotenv": "^8.2.0",
+		"express": "^4.17.1",
+		"express-async-handler": "^1.1.4",
+		"jsonwebtoken": "^8.5.1",
+		"mongoose": "^5.11.18",
+		"nodemon": "^2.0.7"
+	},
+	"devDependencies": {
+		"concurrently": "^5.3.0",
+		"nodemon": "^2.0.6"
+	}
 }
