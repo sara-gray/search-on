@@ -2,6 +2,7 @@ import React, { useContext, useReducer } from 'react'
 import { notify } from '../components/notify'
 import { toast } from 'react-toastify'
 import reducer from './reducer'
+import axios from 'axios'
 
 import publicGames from './publicGames'
 import gameData from './data'
@@ -21,6 +22,9 @@ import {
 	CLEAR_LOADING,
 	FETCH_PUBLIC_REQUEST,
 	FETCH_PUBLIC_SUCCESS,
+	USER_LOGIN_REQUEST,
+	USER_LOGIN_SUCCESS,
+	USER_LOGIN_FAIL,
 } from './types'
 
 const AppContext = React.createContext()
@@ -36,6 +40,8 @@ const initialState = {
 	wordsAvailable: [],
 	wordsGuessed: [],
 	celebrate: false,
+	userInfo: null,
+	error: null,
 }
 
 const AppProvider = ({ children }) => {
@@ -103,6 +109,37 @@ const AppProvider = ({ children }) => {
 		dispatch({ type: WORDSEARCH_GENERATE, payload: newGame })
 	}
 
+	// User actions
+	const login = async (email, password) => {
+		try {
+			dispatch({ type: USER_LOGIN_REQUEST })
+			const config = {
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			}
+			console.log(email, password)
+			const { data } = await axios.post(
+				'/api/users/login',
+				{ email, password },
+				config
+			)
+			console.log(data)
+			// dispatch({ type: USER_LOGIN_SUCCESS, payload: data })
+
+			// localStorage.setItem('userInfo', JSON.stringify(data))
+		} catch (error) {
+			// dispatch({
+			// 	type: USER_LOGIN_FAIL,
+			// 	payload:
+			// 		error.response && error.response.data.message
+			// 			? error.response.data.message
+			// 			: error.message,
+			// })
+			console.log(error)
+		}
+	}
+
 	return (
 		<AppContext.Provider
 			value={{
@@ -121,6 +158,7 @@ const AppProvider = ({ children }) => {
 				fetchPublicGames,
 				fetchGame,
 				generateWordsearch,
+				login,
 			}}>
 			{children}
 		</AppContext.Provider>
