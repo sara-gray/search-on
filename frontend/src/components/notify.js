@@ -18,6 +18,9 @@ export const notify = (message, status, styling) => {
 		case 'INFO':
 			toast.info(message, toastStyle)
 			break
+		case 'ERROR':
+			toast.error(message, toastStyle)
+			break
 		default:
 			toast(message, toastStyle)
 	}

@@ -148,7 +148,7 @@ const reducer = (state, action) => {
 			console.log('Success', action.payload)
 			return { loading: false, userInfo: action.payload }
 		case USER_LOGIN_FAIL:
-			console.log('Error', action.payload)
+			// console.log('Error', action.payload)
 			return { loading: false, error: action.payload }
 		case USER_LOGOUT:
 			return { loading: false, userInfo: null }

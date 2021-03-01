@@ -1,17 +1,25 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { notify } from '../components/notify'
 import { useGlobalContext } from '../context/context'
 
-const Login = () => {
-	const { login } = useGlobalContext()
+const Login = ({ history }) => {
+	const { login, error } = useGlobalContext()
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
 
 	const handleSubmit = (e) => {
 		e.preventDefault()
-		if (email && password) login(email, password)
+		if (email && password) {
+			login(email, password)
+		}
 	}
+
+	useEffect(() => {
+		if (error) {
+			notify(error, 'ERROR')
+		}
+	}, [error])
 
 	return (
 		<div className='section'>

@@ -529,17 +529,24 @@ Login/Registration
 
 .login-form {
 	position: relative;
-	max-width: 50vw;
-	width: 35vw;
+	width: 20rem;
 	margin: 2rem auto;
+	max-width: 80vw;
+	padding: 2rem;
+	min-height: 50vh;
 
 	background-color: var(--clr-grey-light);
 	box-shadow: var(--dark-popout);
 	color: var(--clr-primary-dark);
-	min-height: 50vh;
 	border: transparent;
 	border-radius: 5px;
-	padding: 2rem;
+}
+@media screen and (min-width: 800px) {
+	/* Bigger screens */
+	.login-form {
+		width: 25rem;
+		max-width: 50vw;
+	}
 }
 
 .form-control {
