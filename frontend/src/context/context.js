@@ -88,13 +88,13 @@ const AppProvider = ({ children }) => {
 
 	// Fetch actions
 	const setLoading = () => {
-		dispatch({ type: SET_LOADING })
+		// dispatch({ type: SET_LOADING })
 	}
 	const clearLoading = () => {
-		dispatch({ type: CLEAR_LOADING })
+		// dispatch({ type: CLEAR_LOADING })
 	}
 	const fetchPublicGames = () => {
-		setLoading()
+		// setLoading()
 		const games = [...publicGames]
 		dispatch({ type: FETCH_PUBLIC_SUCCESS, payload: games })
 		return games
@@ -112,6 +112,10 @@ const AppProvider = ({ children }) => {
 	}
 
 	// User actions
+	const setUserInfo = (user) => {
+		// dispatch({ type: USER_SET_INFO })
+	}
+
 	const login = async (email, password) => {
 		try {
 			dispatch({ type: USER_LOGIN_REQUEST })

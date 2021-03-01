@@ -421,7 +421,7 @@ nav {
 	transition: all ease-in-out 200ms;
 }
 .inner-card:hover {
-	background-color: var(--clr-secondary-light);
+	background-color: var(--clr-secondary-mid);
 	transform: rotate(-2deg) translateY(-0.5rem) scale(1.02);
 }
 

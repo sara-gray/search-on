@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom'
 import { notify } from '../components/notify'
 import { useGlobalContext } from '../context/context'
 
-const Login = ({ history }) => {
-	const { login, error } = useGlobalContext()
+const Login = ({ history, location }) => {
+	const { login, userInfo, error } = useGlobalContext()
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
 
@@ -18,8 +18,11 @@ const Login = ({ history }) => {
 	useEffect(() => {
 		if (error) {
 			notify(error, 'ERROR')
+		} else if (userInfo) {
+			// history.push(redirect)
+			console.log(userInfo)
 		}
-	}, [error])
+	}, [error, userInfo])
 
 	return (
 		<div className='section'>

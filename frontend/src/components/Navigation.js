@@ -38,14 +38,12 @@ const Navigation = () => {
 					<FaBars />
 				</div>
 				<ul className='nav-links'>
-					{links.map((link) => {
-						const { id, url, text } = link
-						return (
-							<li key={id}>
-								<Link to={url}>{text}</Link>
-							</li>
-						)
-					})}
+					<li>
+						<Link to='/info'>info</Link>
+					</li>
+					<li>
+						<Link to='/login'>login</Link>
+					</li>
 				</ul>
 
 				<ul className='drop-links' ref={dropMenuRef} onClick={toggleMenu}>

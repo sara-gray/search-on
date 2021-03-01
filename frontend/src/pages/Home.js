@@ -4,7 +4,14 @@ import { useGlobalContext } from '../context/context'
 import Loading from '../components/Loading'
 
 const Home = ({ history }) => {
-	const { loading, publicIds, fetchPublicGames, fetchGame } = useGlobalContext()
+	const {
+		loading,
+		publicIds,
+		fetchPublicGames,
+		fetchGame,
+		setUserInfo,
+		userInfo,
+	} = useGlobalContext()
 
 	const MAX_HERO_IMAGES = 6
 	const randomImage =
@@ -14,6 +21,13 @@ const Home = ({ history }) => {
 
 	useEffect(() => {
 		fetchPublicGames()
+		// Should this be in App.js?
+		setUserInfo(
+			localStorage.getItem('userInfo')
+				? JSON.parse(localStorage.getItem('userInfo'))
+				: null
+		)
+		console.log(userInfo)
 	}, [])
 
 	useEffect(() => {
