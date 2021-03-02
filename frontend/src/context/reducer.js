@@ -22,6 +22,7 @@ import {
 	USER_LOGIN_SUCCESS,
 	USER_LOGIN_FAIL,
 	USER_LOGOUT,
+	USER_SET_INFO,
 } from './types'
 
 const reducer = (state, action) => {
@@ -145,10 +146,9 @@ const reducer = (state, action) => {
 		case USER_LOGIN_REQUEST:
 			return { loading: true }
 		case USER_LOGIN_SUCCESS:
-			console.log('Success', action.payload)
+		case USER_SET_INFO:
 			return { loading: false, userInfo: action.payload }
 		case USER_LOGIN_FAIL:
-			// console.log('Error', action.payload)
 			return { loading: false, error: action.payload }
 		case USER_LOGOUT:
 			return { loading: false, userInfo: null }

@@ -8,6 +8,10 @@ const Login = ({ history, location }) => {
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
 
+	const redirect = location.search ? location.search.split('=')[1] : '/'
+	console.log(redirect)
+	if (userInfo) history.push(redirect)
+
 	const handleSubmit = (e) => {
 		e.preventDefault()
 		if (email && password) {
@@ -16,13 +20,16 @@ const Login = ({ history, location }) => {
 	}
 
 	useEffect(() => {
+		if (userInfo) {
+			// history.push(redirect)
+		}
+	}, [userInfo])
+
+	useEffect(() => {
 		if (error) {
 			notify(error, 'ERROR')
-		} else if (userInfo) {
-			// history.push(redirect)
-			console.log(userInfo)
 		}
-	}, [error, userInfo])
+	}, [error])
 
 	return (
 		<div className='section'>

@@ -27,6 +27,7 @@ import {
 	USER_LOGIN_FAIL,
 	USER_LOGOUT,
 	USER_DETAILS_LOGOUT,
+	USER_SET_INFO,
 } from './types'
 
 const AppContext = React.createContext()
@@ -113,7 +114,7 @@ const AppProvider = ({ children }) => {
 
 	// User actions
 	const setUserInfo = (user) => {
-		// dispatch({ type: USER_SET_INFO })
+		dispatch({ type: USER_SET_INFO, payload: user })
 	}
 
 	const login = async (email, password) => {
@@ -169,7 +170,9 @@ const AppProvider = ({ children }) => {
 				fetchPublicGames,
 				fetchGame,
 				generateWordsearch,
+				setUserInfo,
 				login,
+				logout,
 			}}>
 			{children}
 		</AppContext.Provider>

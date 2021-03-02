@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { FaBars } from 'react-icons/fa'
+import { RiAccountCircleFill } from 'react-icons/ri'
 import { Link } from 'react-router-dom'
+import { useGlobalContext } from '../context/context'
 
 const Navigation = () => {
 	const links = [
@@ -11,6 +13,7 @@ const Navigation = () => {
 		{ id: 1, url: '/info', text: 'info' },
 		{ id: 2, url: '/login', text: 'login' },
 	]
+	const { logout, userInfo } = useGlobalContext()
 	const [showLinks, setShowLinks] = useState(false)
 	const dropMenuRef = useRef(null)
 
@@ -42,7 +45,16 @@ const Navigation = () => {
 						<Link to='/info'>info</Link>
 					</li>
 					<li>
-						<Link to='/login'>login</Link>
+						{userInfo ? (
+							<Link to='/account'>
+								<div className='account'>
+									<RiAccountCircleFill className='account-logo' />
+									{userInfo.name}
+								</div>
+							</Link>
+						) : (
+							<Link to='/login'>login</Link>
+						)}
 					</li>
 				</ul>
 

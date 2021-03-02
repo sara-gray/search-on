@@ -20,7 +20,7 @@ const Home = ({ history }) => {
 	const [games, setGames] = useState([])
 
 	useEffect(() => {
-		fetchPublicGames()
+		// fetchPublicGames()
 		// Should this be in App.js?
 		setUserInfo(
 			localStorage.getItem('userInfo')
@@ -31,11 +31,11 @@ const Home = ({ history }) => {
 	}, [])
 
 	useEffect(() => {
-		let newGames = []
-		publicIds.map((id) => {
-			newGames.push(fetchGame(id))
-		})
-		if (newGames.length !== 0) setGames(newGames)
+		// let newGames = []
+		// publicIds.map((id) => {
+		// 	newGames.push(fetchGame(id))
+		// })
+		// if (newGames.length !== 0) setGames(newGames)
 	}, [publicIds])
 
 	const selectPublicGame = (e) => {
@@ -71,7 +71,7 @@ const Home = ({ history }) => {
 					</button>
 				</article>
 				<article className='hero-cards'>
-					{games.length !== 0 &&
+					{/* {games.length !== 0 &&
 						games.map((nextGame) => {
 							const { id, title, desc, size } = nextGame
 							return (
@@ -83,7 +83,7 @@ const Home = ({ history }) => {
 									</div>
 								</div>
 							)
-						})}
+						})} */}
 				</article>
 			</div>
 		</section>
