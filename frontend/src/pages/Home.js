@@ -22,12 +22,12 @@ const Home = ({ history }) => {
 	useEffect(() => {
 		// fetchPublicGames()
 		// Should this be in App.js?
-		setUserInfo(
-			localStorage.getItem('userInfo')
-				? JSON.parse(localStorage.getItem('userInfo'))
-				: null
-		)
-		console.log(userInfo)
+		// setUserInfo(
+		// 	localStorage.getItem('userInfo')
+		// 		? JSON.parse(localStorage.getItem('userInfo'))
+		// 		: null
+		// )
+		// console.log(userInfo)
 	}, [])
 
 	useEffect(() => {

@@ -1,21 +1,42 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { notify } from '../components/notify'
-
-const Register = () => {
+import { useGlobalContext } from '../context/context'
+const Register = ({ history, location }) => {
+	const { userInfo, error } = useGlobalContext()
 	const [name, setName] = useState('')
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
 	const [confirmPassword, setConfirmPassword] = useState('')
 
-	const handleClick = (e) => {
+	const redirect = location.search ? location.search.split('=')[1] : '/'
+
+	const handleSubmit = (e) => {
 		e.preventDefault()
-		alert('time to register')
+		if (name && email && password && confirmPassword) {
+			if (password !== confirmPassword) {
+				notify('Your passwords do not match', 'ERROR')
+			} else {
+				// register({name. email, password, confirmPassword})
+			}
+		}
 	}
+
+	useEffect(() => {
+		if (userInfo) {
+			history.push(redirect)
+		}
+	}, [userInfo])
+
+	useEffect(() => {
+		if (error) {
+			notify(error, 'ERROR')
+		}
+	}, [error])
 
 	return (
 		<div className='section'>
-			<form className='login-form'>
+			<form onSubmit={handleSubmit} className='login-form'>
 				<h3>Register</h3>
 				<div className='form-control'>
 					<input
@@ -50,7 +71,7 @@ const Register = () => {
 					<p style={{ fontSize: '0.8rem' }}>
 						Already registered? <Link to='/login'>Login</Link>
 					</p>
-					<button type='button' onClick={handleClick} className='btn primary'>
+					<button type='submit' className='btn primary'>
 						Register
 					</button>
 				</div>

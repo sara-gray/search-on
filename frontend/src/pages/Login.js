@@ -9,8 +9,6 @@ const Login = ({ history, location }) => {
 	const [password, setPassword] = useState('')
 
 	const redirect = location.search ? location.search.split('=')[1] : '/'
-	console.log(redirect)
-	if (userInfo) history.push(redirect)
 
 	const handleSubmit = (e) => {
 		e.preventDefault()
@@ -21,7 +19,7 @@ const Login = ({ history, location }) => {
 
 	useEffect(() => {
 		if (userInfo) {
-			// history.push(redirect)
+			history.push(redirect)
 		}
 	}, [userInfo])
 
