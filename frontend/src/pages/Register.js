@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { notify } from '../components/notify'
 import { useGlobalContext } from '../context/context'
+
 const Register = ({ history, location }) => {
-	const { userInfo, error } = useGlobalContext()
+	const { userInfo, error, register } = useGlobalContext()
 	const [name, setName] = useState('')
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
@@ -17,7 +18,7 @@ const Register = ({ history, location }) => {
 			if (password !== confirmPassword) {
 				notify('Your passwords do not match', 'ERROR')
 			} else {
-				// register({name. email, password, confirmPassword})
+				register(name, email, password)
 			}
 		}
 	}
