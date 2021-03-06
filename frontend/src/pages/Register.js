@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { notify } from '../components/notify'
 import { useGlobalContext } from '../context/context'
+import { toast } from 'react-toastify'
 
 const Register = ({ history, location }) => {
 	const { userInfo, error, register } = useGlobalContext()
@@ -20,11 +21,17 @@ const Register = ({ history, location }) => {
 			} else {
 				register(name, email, password)
 			}
+		} else {
+			notify('Please check all your registration fields', 'ERROR')
 		}
 	}
 
 	useEffect(() => {
 		if (userInfo) {
+			notify('Registration successful', 'SUCCESS', {
+				position: toast.POSITION.BOTTOM_LEFT,
+				autoClose: 2000,
+			})
 			history.push(redirect)
 		}
 	}, [userInfo])

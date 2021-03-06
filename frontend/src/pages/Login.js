@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { notify } from '../components/notify'
 import { useGlobalContext } from '../context/context'
+import { toast } from 'react-toastify'
 
 const Login = ({ history, location }) => {
 	const { login, userInfo, error } = useGlobalContext()
@@ -19,6 +20,10 @@ const Login = ({ history, location }) => {
 
 	useEffect(() => {
 		if (userInfo) {
+			notify('Login successful', 'SUCCESS', {
+				position: toast.POSITION.BOTTOM_LEFT,
+				autoClose: 2000,
+			})
 			history.push(redirect)
 		}
 	}, [userInfo])
