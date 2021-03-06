@@ -18,6 +18,14 @@ import {
 	FETCH_GAME_REQUEST,
 	FETCH_GAME_SUCCESS,
 	FETCH_GAME_FAIL,
+	USER_LOGIN_REQUEST,
+	USER_LOGIN_SUCCESS,
+	USER_LOGIN_FAIL,
+	USER_LOGOUT,
+	USER_SET_INFO,
+	USER_REGISTER_REQUEST,
+	USER_REGISTER_SUCCESS,
+	USER_REGISTER_FAIL,
 } from './types'
 
 const reducer = (state, action) => {
@@ -137,6 +145,25 @@ const reducer = (state, action) => {
 				...state,
 				loading: false,
 			}
+
+		case USER_LOGIN_REQUEST:
+			return { loading: true }
+		case USER_LOGIN_SUCCESS:
+		case USER_SET_INFO:
+			return { loading: false, userInfo: action.payload }
+		case USER_LOGIN_FAIL:
+			return { loading: false, error: action.payload }
+		case USER_LOGOUT:
+			return { loading: false, userInfo: null }
+		case USER_REGISTER_REQUEST:
+			return { loading: true }
+		case USER_REGISTER_SUCCESS:
+			return { loading: false, userInfo: action.payload }
+		case USER_REGISTER_FAIL:
+			return { loading: false, error: action.payload }
+
+		default:
+			return state
 	}
 	throw new Error('No matching action type', action.type)
 	return state

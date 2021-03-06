@@ -4,7 +4,14 @@ import { useGlobalContext } from '../context/context'
 import Loading from '../components/Loading'
 
 const Home = ({ history }) => {
-	const { loading, publicIds, fetchPublicGames, fetchGame } = useGlobalContext()
+	const {
+		loading,
+		publicIds,
+		fetchPublicGames,
+		fetchGame,
+		setUserInfo,
+		userInfo,
+	} = useGlobalContext()
 
 	const MAX_HERO_IMAGES = 6
 	const randomImage =
@@ -13,15 +20,22 @@ const Home = ({ history }) => {
 	const [games, setGames] = useState([])
 
 	useEffect(() => {
-		fetchPublicGames()
+		// fetchPublicGames()
+		// Should this be in App.js?
+		// setUserInfo(
+		// 	localStorage.getItem('userInfo')
+		// 		? JSON.parse(localStorage.getItem('userInfo'))
+		// 		: null
+		// )
+		// console.log(userInfo)
 	}, [])
 
 	useEffect(() => {
-		let newGames = []
-		publicIds.map((id) => {
-			newGames.push(fetchGame(id))
-		})
-		if (newGames.length !== 0) setGames(newGames)
+		// let newGames = []
+		// publicIds.map((id) => {
+		// 	newGames.push(fetchGame(id))
+		// })
+		// if (newGames.length !== 0) setGames(newGames)
 	}, [publicIds])
 
 	const selectPublicGame = (e) => {
@@ -57,7 +71,7 @@ const Home = ({ history }) => {
 					</button>
 				</article>
 				<article className='hero-cards'>
-					{games.length !== 0 &&
+					{/* {games.length !== 0 &&
 						games.map((nextGame) => {
 							const { id, title, desc, size } = nextGame
 							return (
@@ -69,7 +83,7 @@ const Home = ({ history }) => {
 									</div>
 								</div>
 							)
-						})}
+						})} */}
 				</article>
 			</div>
 		</section>
