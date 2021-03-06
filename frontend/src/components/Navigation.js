@@ -1,34 +1,49 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { FaBars } from 'react-icons/fa'
-import { RiAccountCircleFill } from 'react-icons/ri'
-import { IoExit, IoPersonCircle } from 'react-icons/io5'
-import { IoEXit } from 'react-icons/io5'
+import {
+	IoExit,
+	IoPersonCircle,
+	IoInformationCircle,
+	IoLogIn,
+} from 'react-icons/io5'
 import { Link } from 'react-router-dom'
 import { useGlobalContext } from '../context/context'
 
-const Menu = () => {
+const Menu = ({ iconsOnly }) => {
 	const { logout, userInfo } = useGlobalContext()
 	return (
 		<>
 			<li>
-				<Link to='/info'>info</Link>
+				<Link to='/info'>
+					{iconsOnly ? <IoInformationCircle className='icon' /> : 'info'}
+				</Link>
 			</li>
-			<li>
-				{userInfo ? (
-					<Link to='/account'>
-						<div className='account'>
-							{/* <RiAccountCircleFill className='account-logo' /> */}
-							<IoPersonCircle className='account-logo' />
-							{userInfo.name}
-						</div>
-					</Link>
-				) : (
-					<Link to='/login'>login</Link>
-				)}
-			</li>
-			{userInfo && (
+
+			{userInfo ? (
 				<li>
-					<IoExit className='account account-logout' onClick={logout} />
+					{iconsOnly ? (
+						<Link to='/account'>
+							<IoPersonCircle className='icon' />
+						</Link>
+					) : (
+						<Link to='/account'>{userInfo.name}</Link>
+					)}
+				</li>
+			) : (
+				<li>
+					{iconsOnly ? (
+						<Link to='/login'>
+							<IoLogIn className='icon' />
+						</Link>
+					) : (
+						<Link to='/login'>login</Link>
+					)}
+				</li>
+			)}
+
+			{userInfo && (
+				<li onClick={logout}>
+					{iconsOnly ? <IoExit className='icon' /> : 'logout'}
 				</li>
 			)}
 		</>
@@ -65,18 +80,11 @@ const Navigation = () => {
 				</div>
 
 				<ul className='nav-links'>
-					<Menu />
+					<Menu iconsOnly={true} />
 				</ul>
 
 				<ul className='drop-links' ref={dropMenuRef} onClick={toggleMenu}>
-					{/* {drops.map((drop) => {
-						const { id, url, text } = drop
-						return (
-							<li key={id}>
-								<Link to={url}>{text}</Link>
-							</li>
-						)
-					})} */}
+					<Menu iconsOnly={true} />
 				</ul>
 			</div>
 		</nav>
