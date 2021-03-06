@@ -3,7 +3,7 @@ import { notify } from '../components/notify'
 import { useGlobalContext } from '../context/context'
 
 const Account = ({ history, location }) => {
-	const { userInfo, error } = useGlobalContext()
+	const { userInfo, error, updateUserProfile } = useGlobalContext()
 	const [name, setName] = useState(userInfo ? userInfo.name : '')
 	const [email, setEmail] = useState(userInfo ? userInfo.email : '')
 	const [password, setPassword] = useState('')
@@ -13,12 +13,24 @@ const Account = ({ history, location }) => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault()
-		if (name && email && password && confirmPassword) {
+
+		if (password && confirmPassword) {
 			if (password !== confirmPassword) {
 				notify('Your passwords do not match', 'ERROR')
 			} else {
-				// updateUser(name, email, password)
-				console.log('update user details', name, email, password)
+				const user = { ...userInfo, name, email, password }
+				updateUserProfile(user)
+				notify('Profile and password updated', 'SUCCESS')
+				setPassword('')
+				setConfirmPassword('')
+			}
+		} else {
+			if (password) {
+				notify('You must confirm your password to reset it', 'ERROR')
+			} else {
+				const user = { ...userInfo, name, email }
+				updateUserProfile(user)
+				notify('Profile updated', 'SUCCESS')
 			}
 		}
 	}
@@ -57,7 +69,7 @@ const Account = ({ history, location }) => {
 						<input
 							type='password'
 							className='login'
-							placeholder='Reset Password'
+							placeholder='Reset password'
 							value={password}
 							onChange={(e) => setPassword(e.target.value)}
 						/>
@@ -65,13 +77,13 @@ const Account = ({ history, location }) => {
 						<input
 							type='password'
 							className='login'
-							placeholder='Confirm password'
+							placeholder='Confirm new password'
 							value={confirmPassword}
 							disabled={password.length === 0 ? true : false}
 							onChange={(e) => setConfirmPassword(e.target.value)}
 						/>
 						<button type='submit' className='btn primary'>
-							Update User Details
+							Update
 						</button>
 					</div>
 				</form>
