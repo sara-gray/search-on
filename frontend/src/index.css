@@ -130,14 +130,13 @@ p {
 
 /* section */
 .section {
-	width: 90vw;
+	width: 95vw;
 	margin: 0 auto;
 	max-width: var(--max-width);
 }
-
-@media screen and (min-width: 992px) {
+@media screen and (min-width: 600px) {
 	.section {
-		width: 95vw;
+		width: 90vw;
 	}
 }
 
@@ -158,6 +157,7 @@ nav {
 	align-items: center;
 	justify-content: space-between;
 	height: var(--nav-height);
+	padding: 0 1rem;
 }
 
 .logo {
@@ -166,37 +166,16 @@ nav {
 .logo a {
 	color: var(--clr-primary-light);
 }
-.account {
-	display: flex;
-}
-.account-logo {
-	font-size: 1.5rem;
-	margin-right: 0.2rem;
-}
-
-.account-logout {
-	font-size: 1.5rem;
-	color: var(--clr-primary-light);
-}
-
-.drop-menu {
-	position: absolute;
-	top: var(--nav-height);
-	left: 80vw;
-	width: 15vw;
-	height: 0px;
-	/* display: none; */
-}
 
 .drop-links {
 	position: absolute;
 	z-index: 999;
 	top: var(--nav-height);
-	left: 80vw;
+	right: 0;
 	width: 15vw;
-	background-color: white;
+	background-color: var(--clr-primary-mid);
 	border-color: transparent;
-	padding: 1rem;
+	text-align: center;
 	display: none;
 }
 .drop-links li {
@@ -204,12 +183,15 @@ nav {
 	text-align: center;
 }
 .drop-links li a {
-	font-size: larger;
-	color: var(--clr-grey-mid);
-	text-transform: capitalize;
+	text-align: center;
+	color: var(--clr-grey-light);
 }
 .drop-links li:hover {
-	background-color: var(--clr-primary-mid);
+	background-color: var(--clr-primary-light);
+}
+.drop-links .icon {
+	font-size: 1.5rem;
+	align-content: center;
 }
 
 .nav-toggle {
@@ -237,7 +219,6 @@ nav {
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		padding: 1rem;
 		background-color: transparent;
 		color: var(--clr-grey-light);
 	}
@@ -245,16 +226,21 @@ nav {
 	.nav-links li {
 		padding: 0.5rem;
 		text-align: center;
+		color: var(--clr-primary-light);
+		text-transform: capitalize;
 	}
 	.nav-links li a {
 		color: var(--clr-primary-light);
-		text-transform: capitalize;
 	}
 	.nav-links li:hover {
 		background-color: var(--clr-primary-mid);
 	}
+	.nav-links .icon {
+		font-size: 2rem;
+		align-content: center;
+	}
 	.nav-container {
-		padding: 0;
+		padding: 0 2rem;
 	}
 	.nav-toggle,
 	.drop-menu,
@@ -355,15 +341,17 @@ nav {
 	background-color: var(--clr-primary-light);
 	text-transform: none;
 	margin: 0 2rem 2rem;
-	min-height: 40vh;
-	padding: 1rem;
+	padding: 0.4rem 1rem;
 	border-radius: 10px;
 	box-shadow: var(--dark-popout);
 }
 .hero-info p {
-	line-height: 1.8;
-	margin-bottom: 0.2rem;
+	font-size: small;
+	margin-bottom: 0.5rem;
 	color: var(--clr-grey-dark);
+}
+.hero-info h2 {
+	/* font-size: 2rem; */
 }
 
 @media screen and (min-width: 800px) {
@@ -372,37 +360,21 @@ nav {
 		grid-template-columns: 2fr 1fr;
 	}
 	.hero-info {
-		max-height: 35vh;
+		/* max-height: 35vh; */
+		padding: 1rem;
+	}
+	.hero-info p {
+		margin-bottom: 0.2rem;
+		color: var(--clr-grey-dark);
 	}
 }
+
 .hero-cards {
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
 	max-height: 35vh;
 	overflow-y: scroll;
 	padding: 1rem;
-}
-
-@media screen and (min-width: 800px) {
-	/* Bigger screens */
-	.hero-center {
-		grid-template-columns: 2fr 1fr;
-	}
-	.hero-info {
-		max-height: 35vh;
-	}
-	.hero-cards {
-		grid-template-columns: 1fr;
-		max-height: 75vh;
-	}
-}
-
-@media screen and (max-width: 600px) {
-	/* Smaller screens */
-	.hero-cards {
-		/* grid-template-columns: 1fr 1fr;
-		max-height: 75vh; */
-	}
 }
 
 .card {
@@ -435,6 +407,13 @@ nav {
 .inner-card:hover {
 	background-color: var(--clr-secondary-mid);
 	transform: rotate(-2deg) translateY(-0.5rem) scale(1.02);
+}
+@media screen and (max-width: 600px) {
+	/* Smaller screens */
+	.hero-cards {
+		/* grid-template-columns: 1fr 1fr;
+		max-height: 75vh; */
+	}
 }
 
 /* PLAY */
@@ -611,4 +590,25 @@ li {
 
 .info ul > li {
 	margin-left: 3rem;
+}
+
+.edit-form {
+	margin-top: 2rem;
+	background-color: aquamarine;
+	padding: 1rem;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+}
+
+.edit-form-control {
+	display: flex;
+	justify-content: flex-start;
+	flex-direction: column;
+	padding: 0 1rem;
+}
+.edit-input {
+	border: 1px solid var(--clr-grey-mid);
+	padding: 0.5rem 1rem;
+	border-radius: 5px;
+	margin: 1rem 0 0.5rem 0;
 }
