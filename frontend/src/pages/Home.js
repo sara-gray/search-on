@@ -41,6 +41,26 @@ const Home = ({ history }) => {
 		},
 	])
 
+	const [userGames, setUserGames] = useState([
+		{
+			id: 1,
+			title: 'User 1',
+			desc: 'Find the animals',
+			size: { x: 20, y: 20 },
+		},
+		{
+			id: 2,
+			title: 'User 2',
+			desc: 'Locate all your family members',
+			size: { x: 10, y: 10 },
+		},
+		{
+			id: 3,
+			title: 'User 3',
+			desc: 'just for testing',
+			size: { x: 5, y: 5 },
+		},
+	])
 	const MAX_HERO_IMAGES = 6
 	const randomImage =
 		Math.floor(Math.random() * Math.floor(MAX_HERO_IMAGES)) + 1
@@ -66,14 +86,26 @@ const Home = ({ history }) => {
 		// if (newGames.length !== 0) setGames(newGames)
 	}, [publicIds])
 
-	const selectPublicGame = (e) => {
-		let id
-		if (e.target.tagName === 'DIV') {
-			id = e.target.id
+	useEffect(() => {
+		console.log('Get the info about this users wordsearches')
+	}, [userInfo])
+
+	const getIdFromTarget = (target) => {
+		if (target.tagName === 'DIV') {
+			return target.id
 		} else {
-			id = e.target.parentNode.id
+			return target.parentNode.id
 		}
+	}
+
+	const selectPublicGame = (e) => {
+		const id = getIdFromTarget(e.target)
 		history.push(`/play/${id}`)
+	}
+
+	const editUserGame = (e) => {
+		const id = getIdFromTarget(e.target)
+		history.push(`/edit/${id}`)
 	}
 
 	if (loading) return <Loading />
@@ -82,40 +114,42 @@ const Home = ({ history }) => {
 		<section className={`hero hero-image${randomImage}`}>
 			<div className='home-center section'>
 				{/* Information section */}
-				<article className='home-info '>
-					<h2>Play and create Wordsearches online</h2>
-					<p>
-						<strong>Education</strong>: Create and distribute wordsearches to
-						your students
-					</p>
-					<p>
-						<strong>Gaming</strong>: Just enjoy creating and playing your own
-						wordsearches. Share them with friends and family!
-					</p>
-					<button className='btn primary'>
-						<Link to='/login'>Login</Link>
-					</button>
-					<button className='btn'>
-						<Link to='/register'>Register</Link>
-					</button>
-				</article>
+				{!userInfo && (
+					<article className='home-info '>
+						<h2>Play and create Wordsearches online</h2>
+						<p>
+							<strong>Education</strong>: Create and distribute wordsearches to
+							your students
+						</p>
+						<p>
+							<strong>Gaming</strong>: Just enjoy creating and playing your own
+							wordsearches. Share them with friends and family!
+						</p>
+						<button className='btn primary'>
+							<Link to='/login'>Login</Link>
+						</button>
+						<button className='btn'>
+							<Link to='/register'>Register</Link>
+						</button>
+					</article>
+				)}
 
 				{/* Public games section */}
-				<article className='games public-games'>
-					<div className='search-title'>
-						<h4>play now</h4>
-						<div
-							className='search'
-							onClick={() => {
-								console.log('searching?')
-							}}>
-							<IoSearchOutline />
-							<input type='text'></input>
+				{publicGames.length !== 0 && (
+					<article className='games public-games'>
+						<div className='search-title'>
+							<h4>play now</h4>
+							<div
+								className='search'
+								onClick={() => {
+									console.log('searching?')
+								}}>
+								<IoSearchOutline />
+								<input type='text'></input>
+							</div>
 						</div>
-					</div>
-					<div className='game-cards'>
-						{publicGames.length !== 0 &&
-							publicGames.map((nextGame) => {
+						<div className='game-cards'>
+							{publicGames.map((nextGame) => {
 								const { id, title, desc, size } = nextGame
 								return (
 									<div key={id} className='card' onClick={selectPublicGame}>
@@ -127,28 +161,29 @@ const Home = ({ history }) => {
 									</div>
 								)
 							})}
-					</div>
-				</article>
+						</div>
+					</article>
+				)}
 
 				{/* User games section */}
-				<article className='games user-games'>
-					<div className='search-title'>
-						<h4>your games</h4>
-						<div
-							className='search'
-							onClick={() => {
-								console.log('searching?')
-							}}>
-							<IoSearchOutline />
-							<input type='text'></input>
+				{userGames.length !== 0 && (
+					<article className='games user-games'>
+						<div className='search-title'>
+							<h4>your games</h4>
+							<div
+								className='search'
+								onClick={() => {
+									console.log('searching?')
+								}}>
+								<IoSearchOutline />
+								<input type='text'></input>
+							</div>
 						</div>
-					</div>
-					<div className='game-cards'>
-						{publicGames.length !== 0 &&
-							publicGames.map((nextGame) => {
+						<div className='game-cards'>
+							{userGames.map((nextGame) => {
 								const { id, title, desc, size } = nextGame
 								return (
-									<div key={id} className='card' onClick={selectPublicGame}>
+									<div key={id} className='card' onClick={editUserGame}>
 										<div className='inner-card' id={id}>
 											<h4>{title}</h4>
 											<p style={{ fontSize: '0.8rem' }}>{desc}</p>
@@ -157,8 +192,9 @@ const Home = ({ history }) => {
 									</div>
 								)
 							})}
-					</div>
-				</article>
+						</div>
+					</article>
+				)}
 			</div>
 		</section>
 	)

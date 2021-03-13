@@ -95,7 +95,7 @@ p {
 }
 @media screen and (min-width: 800px) {
 	h1 {
-		font-size: 3rem;
+		font-size: 2.8rem;
 	}
 	h2 {
 		font-size: 2.5rem;
@@ -363,8 +363,8 @@ Shows a hero image with information, public wordsearches and user wordsearches
 	color: var(--clr-primary-light);
 }
 .user-games {
-	background-color: rgba(255, 255, 255, 0.8);
-	color: var(--clr-primary-dark);
+	background-color: rgba(0, 0, 0, 0.8);
+	color: var(--clr-primary-light);
 }
 .search-title {
 	height: 2rem;
@@ -433,7 +433,6 @@ Shows a hero image with information, public wordsearches and user wordsearches
 @media screen and (min-width: 600px) {
 	.home-center {
 		grid-template-columns: 2fr 1fr;
-		/* background-color: orange; */
 	}
 	.public-games > .game-cards {
 		max-height: 22vh;
@@ -456,7 +455,6 @@ Shows a hero image with information, public wordsearches and user wordsearches
 		font-size: 1.8rem;
 	}
 	.home-center {
-		/* background-color: aqua; */
 		top: 25vh;
 	}
 	.home-info {
