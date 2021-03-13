@@ -15,7 +15,8 @@ const Edit = () => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault()
-		console.log('save form')
+
+		console.log('save form', title, desc, words, size, language)
 	}
 	const addWord = (e) => {
 		e.preventDefault()
@@ -39,19 +40,35 @@ const Edit = () => {
 					Enter a brief description of your wordsearch:
 				</label>
 				<textarea id='desc' name='desc'></textarea>
+				<div className='edit-grid-size'>
+					<p>Select a grid size:</p>
+					<label htmlFor='small'>Small 10x10</label>
+					<input
+						type='radio'
+						id='small'
+						value='10x10'
+						checked
+						onChange={(e) => setSize(e.target.value ? SMALL : {})}
+					/>
 
-				<p>Select a grid size:</p>
+					<label htmlFor='medium'>Medium 15x15</label>
+					<input
+						type='radio'
+						id='medium'
+						value='15x15'
+						onChange={(e) => setSize(e.target.value ? MEDIUM : {})}
+					/>
 
-				<label htmlFor='huey'>Huey</label>
-				<input type='radio' id='huey' name='drone' value='10x10' checked />
+					<label htmlFor='large'>Large</label>
+					<input
+						type='radio'
+						id='louie'
+						value='20x20'
+						onChange={(e) => setSize(e.target.value ? LARGE : {})}
+					/>
+				</div>
 
-				<label htmlFor='dewey'>Dewey</label>
-				<input type='radio' id='dewey' name='drone' value='15x15' />
-
-				<label htmlFor='louie'>Louie</label>
-				<input type='radio' id='louie' name='drone' value='20x20' />
-
-				<label for='pet-select'>Choose a language:</label>
+				<label htmlFor='pet-select'>Choose a language:</label>
 
 				<select id='language-select'>
 					<option value=''>--Please choose an option--</option>
