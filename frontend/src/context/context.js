@@ -4,9 +4,6 @@ import { toast } from 'react-toastify'
 import reducer from './reducer'
 import axios from 'axios'
 
-import publicGames from './publicGames'
-import gameData from './data'
-
 import {
 	WORDSEARCH_GENERATE,
 	GAME_START,
@@ -18,10 +15,8 @@ import {
 	GAME_CELEBRATE_ON,
 	GAME_CELEBRATE_OFF,
 	GAME_FOUND_WORD,
-	SET_LOADING,
-	CLEAR_LOADING,
-	FETCH_PUBLIC_REQUEST,
-	FETCH_PUBLIC_SUCCESS,
+	GRID_PUBLIC_REQUEST,
+	GRID_PUBLIC_SUCCESS,
 	USER_LOGIN_REQUEST,
 	USER_LOGIN_SUCCESS,
 	USER_LOGIN_FAIL,
@@ -36,13 +31,13 @@ import {
 	USER_UPDATE_PROFILE_REQUEST,
 	USER_UPDATE_PROFILE_SUCCESS,
 	USER_UPDATE_PROFILE_FAIL,
+	GRID_PUBLIC_FAIL,
 } from './types'
 
 const AppContext = React.createContext()
 
 const initialState = {
 	loading: false,
-	publicIds: [],
 	playing: false,
 	game: {},
 	guess: '',
@@ -53,6 +48,7 @@ const initialState = {
 	celebrate: false,
 	userInfo: null,
 	error: null,
+	publicGrids: null,
 }
 
 const AppProvider = ({ children }) => {
@@ -95,25 +91,35 @@ const AppProvider = ({ children }) => {
 	}
 
 	// Fetch actions
-	const setLoading = () => {
-		// dispatch({ type: SET_LOADING })
-	}
-	const clearLoading = () => {
-		// dispatch({ type: CLEAR_LOADING })
-	}
-	const fetchPublicGames = () => {
-		// setLoading()
-		const games = [...publicGames]
-		dispatch({ type: FETCH_PUBLIC_SUCCESS, payload: games })
-		return games
-	}
-	const fetchGame = (id) => {
-		const data = [...gameData]
-		if (data) {
-			const findGame = data.filter((item) => item.id === Number(id))
-			return findGame[0]
+	const fetchPublicGrids = async () => {
+		try {
+			dispatch({ type: GRID_PUBLIC_REQUEST })
+			const config = {
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			}
+
+			const { data } = await axios.get('/api/grids', config)
+			dispatch({ type: GRID_PUBLIC_SUCCESS, payload: data })
+		} catch (error) {
+			dispatch({
+				type: GRID_PUBLIC_FAIL,
+				payload:
+					error.response && error.response.data.message
+						? error.response.data.message
+						: error.message,
+			})
 		}
-		return null
+	}
+
+	const fetchGrid = (id) => {
+		// const data = [...gameData]
+		// if (data) {
+		// 	const findGame = data.filter((item) => item.id === Number(id))
+		// 	return findGame[0]
+		// }
+		// return null
 	}
 	const generateWordsearch = (newGame) => {
 		dispatch({ type: WORDSEARCH_GENERATE, payload: newGame })
@@ -252,10 +258,8 @@ const AppProvider = ({ children }) => {
 				clearClickHistory,
 				addToGuess,
 				foundWord,
-				setLoading,
-				clearLoading,
-				fetchPublicGames,
-				fetchGame,
+				fetchPublicGrids,
+				fetchGrid,
 				generateWordsearch,
 				setUserInfo,
 				login,

@@ -10,14 +10,14 @@ import {
 	GAME_SET_DIRECTION,
 	GAME_CELEBRATE_ON,
 	GAME_CELEBRATE_OFF,
-	FETCH_PUBLIC_REQUEST,
-	FETCH_PUBLIC_SUCCESS,
-	FETCH_PUBLIC_FAIL,
+	GRID_PUBLIC_REQUEST,
+	GRID_PUBLIC_SUCCESS,
+	GRID_PUBLIC_FAIL,
 	SET_LOADING,
 	CLEAR_LOADING,
-	FETCH_GAME_REQUEST,
-	FETCH_GAME_SUCCESS,
-	FETCH_GAME_FAIL,
+	GRID_GAME_REQUEST,
+	GRID_GAME_SUCCESS,
+	GRID_GAME_FAIL,
 	USER_LOGIN_REQUEST,
 	USER_LOGIN_SUCCESS,
 	USER_LOGIN_FAIL,
@@ -134,17 +134,12 @@ const reducer = (state, action) => {
 				loading: false,
 			}
 
-		case FETCH_PUBLIC_SUCCESS:
-			return {
-				...state,
-				loading: false,
-				publicIds: action.payload,
-			}
-		case FETCH_PUBLIC_FAIL:
-			return {
-				...state,
-				loading: false,
-			}
+		case GRID_PUBLIC_REQUEST:
+			return { loading: true }
+		case GRID_PUBLIC_SUCCESS:
+			return { loading: false, publicGrids: action.payload }
+		case GRID_PUBLIC_FAIL:
+			return { loading: false, error: action.payload }
 
 		case USER_LOGIN_REQUEST:
 			return { loading: true }

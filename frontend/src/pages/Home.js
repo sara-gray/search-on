@@ -7,40 +7,12 @@ import Loading from '../components/Loading'
 const Home = ({ history }) => {
 	const {
 		loading,
-		publicIds,
-		fetchPublicGames,
-		fetchGame,
-		setUserInfo,
 		userInfo,
+		publicGrids,
+		fetchPublicGrids,
 	} = useGlobalContext()
 
-	const [publicGames, setPublicGames] = useState([
-		{
-			id: 1,
-			title: 'Random animals',
-			desc: 'Find the animals',
-			size: { x: 20, y: 20 },
-		},
-		{
-			id: 2,
-			title: 'Family',
-			desc: 'Locate all your family members',
-			size: { x: 10, y: 10 },
-		},
-		{
-			id: 3,
-			title: 'science',
-			desc: 'Types of bonding',
-			size: { x: 20, y: 20 },
-		},
-		{
-			id: 4,
-			title: 'Test',
-			desc: 'just for testing',
-			size: { x: 5, y: 5 },
-		},
-	])
-
+	const [publicGames, setPublicGames] = useState([])
 	const [userGames, setUserGames] = useState([])
 	const MAX_HERO_IMAGES = 6
 	const randomImage =
@@ -49,8 +21,13 @@ const Home = ({ history }) => {
 	const [games, setGames] = useState([])
 
 	useEffect(() => {
-		console.log('home screen rendered, fetch public games')
+		fetchPublicGrids()
 	}, [])
+
+	useEffect(() => {
+		// setPublicGames(publicGrids)
+		if (publicGrids) console.log(publicGrids)
+	}, [publicGrids])
 
 	useEffect(() => {
 		console.log('Get the info about this users wordsearches')
@@ -101,7 +78,7 @@ const Home = ({ history }) => {
 				)}
 
 				{/* Public games section */}
-				{publicGames.length !== 0 && (
+				{publicGrids && (
 					<article className='games public-games'>
 						<div className='search-title'>
 							<h4>play now</h4>
@@ -115,7 +92,7 @@ const Home = ({ history }) => {
 							</div>
 						</div>
 						<div className='game-cards'>
-							{publicGames.map((nextGame) => {
+							{publicGrids.map((nextGame) => {
 								const { id, title, desc, size } = nextGame
 								return (
 									<div key={id} className='card' onClick={selectPublicGame}>
