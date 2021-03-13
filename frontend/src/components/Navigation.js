@@ -70,9 +70,9 @@ const Navigation = () => {
 		<nav>
 			<div className='nav-container section'>
 				<div className='logo'>
-					<h2>
+					<h1>
 						<Link to='/'>SearchOn</Link>
-					</h2>
+					</h1>
 				</div>
 
 				<div className='nav-toggle' onClick={toggleMenu}>
