@@ -41,26 +41,7 @@ const Home = ({ history }) => {
 		},
 	])
 
-	const [userGames, setUserGames] = useState([
-		{
-			id: 1,
-			title: 'User 1',
-			desc: 'Find the animals',
-			size: { x: 20, y: 20 },
-		},
-		{
-			id: 2,
-			title: 'User 2',
-			desc: 'Locate all your family members',
-			size: { x: 10, y: 10 },
-		},
-		{
-			id: 3,
-			title: 'User 3',
-			desc: 'just for testing',
-			size: { x: 5, y: 5 },
-		},
-	])
+	const [userGames, setUserGames] = useState([])
 	const MAX_HERO_IMAGES = 6
 	const randomImage =
 		Math.floor(Math.random() * Math.floor(MAX_HERO_IMAGES)) + 1
@@ -68,23 +49,8 @@ const Home = ({ history }) => {
 	const [games, setGames] = useState([])
 
 	useEffect(() => {
-		// fetchPublicGames()
-		// Should this be in App.js?
-		// setUserInfo(
-		// 	localStorage.getItem('userInfo')
-		// 		? JSON.parse(localStorage.getItem('userInfo'))
-		// 		: null
-		// )
-		// console.log(userInfo)
+		console.log('home screen rendered, fetch public games')
 	}, [])
-
-	useEffect(() => {
-		// let newGames = []
-		// publicIds.map((id) => {
-		// 	newGames.push(fetchGame(id))
-		// })
-		// if (newGames.length !== 0) setGames(newGames)
-	}, [publicIds])
 
 	useEffect(() => {
 		console.log('Get the info about this users wordsearches')
