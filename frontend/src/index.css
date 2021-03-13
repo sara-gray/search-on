@@ -594,7 +594,9 @@ li {
 
 .edit-form {
 	margin-top: 2rem;
-	background-color: aquamarine;
+	background-color: var(--clr-grey-light);
+	box-shadow: var(--dark-popout);
+	color: var(--clr-primary-dark);
 	padding: 1rem;
 	display: grid;
 	grid-template-columns: 1fr 1fr;
