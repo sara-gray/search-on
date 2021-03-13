@@ -6,6 +6,7 @@ const gridSchema = mongoose.Schema(
 		title: { type: String, required: true },
 		desc: { type: String },
 		words: { type: Array, required: true },
+		size: { type: Object, required: true },
 		language: { type: String, required: true },
 		isPublic: { type: Boolean, required: true, default: false },
 	},
