@@ -12,7 +12,6 @@ const Home = ({ history }) => {
 		fetchPublicGrids,
 	} = useGlobalContext()
 
-	const [publicGames, setPublicGames] = useState([])
 	const [userGames, setUserGames] = useState([])
 	const MAX_HERO_IMAGES = 6
 	const randomImage =
@@ -24,10 +23,10 @@ const Home = ({ history }) => {
 		fetchPublicGrids()
 	}, [])
 
-	useEffect(() => {
-		// setPublicGames(publicGrids)
-		if (publicGrids) console.log(publicGrids)
-	}, [publicGrids])
+	// useEffect(() => {
+	// 	setPublicGames(publicGrids)
+	// 	if (publicGrids) console.log(publicGrids)
+	// }, [publicGrids])
 
 	useEffect(() => {
 		console.log('Get the info about this users wordsearches')
@@ -93,7 +92,18 @@ const Home = ({ history }) => {
 						</div>
 						<div className='game-cards'>
 							{publicGrids.map((nextGame) => {
-								const { id, title, desc, size } = nextGame
+								const { _id, title, desc, size } = nextGame
+								return (
+									<div key={_id} className='card' onClick={selectPublicGame}>
+										<div className='inner-card' id={_id}>
+											<h4>{title}</h4>
+											<p style={{ fontSize: '0.8rem' }}>{desc}</p>
+											Grid size: {size.x} x {size.y}
+										</div>
+									</div>
+								)
+							})}
+							{/* {publicGrids.map((nextGame) => {
 								return (
 									<div key={id} className='card' onClick={selectPublicGame}>
 										<div className='inner-card' id={id}>
@@ -103,7 +113,7 @@ const Home = ({ history }) => {
 										</div>
 									</div>
 								)
-							})}
+							})} */}
 						</div>
 					</article>
 				)}

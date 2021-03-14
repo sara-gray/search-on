@@ -141,6 +141,13 @@ const reducer = (state, action) => {
 		case GRID_PUBLIC_FAIL:
 			return { loading: false, error: action.payload }
 
+		case GRID_GAME_REQUEST:
+			return { loading: true }
+		case GRID_GAME_SUCCESS:
+			return { loading: false, currentGrid: action.payload }
+		case GRID_GAME_FAIL:
+			return { loading: false, error: action.payload }
+
 		case USER_LOGIN_REQUEST:
 			return { loading: true }
 		case USER_LOGIN_SUCCESS:

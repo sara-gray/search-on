@@ -32,6 +32,9 @@ import {
 	USER_UPDATE_PROFILE_SUCCESS,
 	USER_UPDATE_PROFILE_FAIL,
 	GRID_PUBLIC_FAIL,
+	GRID_GAME_SUCCESS,
+	GRID_GAME_REQUEST,
+	GRID_GAME_FAIL,
 } from './types'
 
 const AppContext = React.createContext()
@@ -49,6 +52,7 @@ const initialState = {
 	userInfo: null,
 	error: null,
 	publicGrids: null,
+	currentGrid: null,
 }
 
 const AppProvider = ({ children }) => {
@@ -113,13 +117,26 @@ const AppProvider = ({ children }) => {
 		}
 	}
 
-	const fetchGrid = (id) => {
-		// const data = [...gameData]
-		// if (data) {
-		// 	const findGame = data.filter((item) => item.id === Number(id))
-		// 	return findGame[0]
-		// }
-		// return null
+	const fetchGrid = async (id) => {
+		try {
+			dispatch({ type: GRID_GAME_REQUEST })
+			const config = {
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			}
+
+			const { data } = await axios.get(`/api/grids/${id}`, config)
+			dispatch({ type: GRID_GAME_SUCCESS, payload: data })
+		} catch (error) {
+			dispatch({
+				type: GRID_GAME_FAIL,
+				payload:
+					error.response && error.response.data.message
+						? error.response.data.message
+						: error.message,
+			})
+		}
 	}
 	const generateWordsearch = (newGame) => {
 		dispatch({ type: WORDSEARCH_GENERATE, payload: newGame })
