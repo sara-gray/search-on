@@ -29,7 +29,11 @@ const Home = ({ history }) => {
 	// }, [publicGrids])
 
 	useEffect(() => {
-		console.log('Get the info about this users wordsearches')
+		if (userInfo) {
+			console.log(userInfo)
+		} else {
+			console.log('userInfo not set')
+		}
 	}, [userInfo])
 
 	const getIdFromTarget = (target) => {
@@ -77,6 +81,7 @@ const Home = ({ history }) => {
 				)}
 
 				{/* Public games section */}
+				{!publicGrids && <div>no public grids</div>}
 				{publicGrids && (
 					<article className='games public-games'>
 						<div className='search-title'>
@@ -103,22 +108,12 @@ const Home = ({ history }) => {
 									</div>
 								)
 							})}
-							{/* {publicGrids.map((nextGame) => {
-								return (
-									<div key={id} className='card' onClick={selectPublicGame}>
-										<div className='inner-card' id={id}>
-											<h4>{title}</h4>
-											<p style={{ fontSize: '0.8rem' }}>{desc}</p>
-											Grid size: {size.x} x {size.y}
-										</div>
-									</div>
-								)
-							})} */}
 						</div>
 					</article>
 				)}
 
 				{/* User games section */}
+				{userGames.length === 0 && <div>no user grids</div>}
 				{userGames.length !== 0 && (
 					<article className='games user-games'>
 						<div className='search-title'>

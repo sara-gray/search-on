@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { FaBars } from 'react-icons/fa'
 import {
-	IoExit,
+	IoLogOut,
 	IoPersonCircle,
 	IoInformationCircle,
 	IoLogIn,
@@ -43,7 +43,7 @@ const Menu = ({ iconsOnly }) => {
 
 			{userInfo && (
 				<li onClick={logout}>
-					{iconsOnly ? <IoExit className='icon' /> : 'logout'}
+					{iconsOnly ? <IoLogOut className='icon' /> : 'logout'}
 				</li>
 			)}
 		</>

@@ -43,7 +43,7 @@ const getGridDetails = asyncHandler(async (req, res) => {
 })
 
 // @desc    Get all public grids
-// @route   GET /api/grids
+// @route   GET /api/grids/
 // @access  Public
 const getPublicGrids = asyncHandler(async (req, res) => {
 	const grids = await Grid.find({ isPublic: true })
