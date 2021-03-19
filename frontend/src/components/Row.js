@@ -126,7 +126,7 @@ const Row = ({ row, rowIndex }) => {
 					}
 				}
 			} else {
-				notify('Not a valid letter', 'WARN', { autoClose: 3000 })
+				notify('Not valid', 'WARN', { autoClose: 3000 })
 				clearClickHistory()
 				switchClass('selected', '')
 			}

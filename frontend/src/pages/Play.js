@@ -24,27 +24,18 @@ const Play = ({ location }) => {
 		const id = pages[pages.length - 1]
 
 		fetchGrid(id)
-		// gameStart(newGame)
 
 		return () => {
-			console.log('no game')
-			// gameReset()
+			gameReset()
 		}
 	}, [])
 
 	useEffect(() => {
-		if (currentGrid) {
-			console.log('play game')
-		} else {
-			console.log('no game')
-			// resetGame()
+		if (currentGrid && !playing) {
+			generateWordsearch({ ...currentGrid })
+			gameStart({ ...currentGrid })
 		}
-		// generateWordsearch(currentGrid)
-		// if (!playing && playGame !== null) {
-		// 	generateWordsearch(playGame)
-		// 	gameStart(playGame)
-		// }
-	}, [currentGrid])
+	}, [currentGrid, playing])
 
 	if (loading) return <Loading />
 	return (
@@ -53,10 +44,10 @@ const Play = ({ location }) => {
 			{playing && (
 				<section className='section'>
 					<div className='play'>
-						{/* <Wordsearch />
+						<Wordsearch />
 						<Words />
 						<Restart />
-						<CopyLink /> */}
+						<CopyLink />
 					</div>
 				</section>
 			)}
