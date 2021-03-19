@@ -209,8 +209,7 @@ const AppProvider = ({ children }) => {
 	}
 
 	const logout = async () => {
-		// localStorage.removeItem('userInfo')
-		console.log('remove from local storage')
+		localStorage.removeItem('userInfo')
 		dispatch({ type: USER_LOGOUT })
 	}
 

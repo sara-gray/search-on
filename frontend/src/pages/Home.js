@@ -17,22 +17,13 @@ const Home = ({ history }) => {
 	const randomImage =
 		Math.floor(Math.random() * Math.floor(MAX_HERO_IMAGES)) + 1
 
-	const [games, setGames] = useState([])
-
 	useEffect(() => {
 		fetchPublicGrids()
 	}, [])
 
-	// useEffect(() => {
-	// 	setPublicGames(publicGrids)
-	// 	if (publicGrids) console.log(publicGrids)
-	// }, [publicGrids])
-
 	useEffect(() => {
 		if (userInfo) {
-			console.log(userInfo)
-		} else {
-			console.log('userInfo not set')
+			console.log('Get all grids for this user')
 		}
 	}, [userInfo])
 
@@ -60,28 +51,29 @@ const Home = ({ history }) => {
 		<section className={`hero hero-image${randomImage}`}>
 			<div className='home-center section'>
 				{/* Information section */}
-				{!userInfo && (
-					<article className='home-info '>
-						<h2>Play and create Wordsearches online</h2>
-						<p>
-							<strong>Education</strong>: Create and distribute wordsearches to
-							your students
-						</p>
-						<p>
-							<strong>Gaming</strong>: Just enjoy creating and playing your own
-							wordsearches. Share them with friends and family!
-						</p>
-						<button className='btn primary'>
-							<Link to='/login'>Login</Link>
-						</button>
-						<button className='btn'>
-							<Link to='/register'>Register</Link>
-						</button>
-					</article>
-				)}
+				<article className='home-info '>
+					<h2>Play and create Wordsearches online</h2>
+					<p>
+						<strong>Education</strong>: Create and distribute wordsearches to
+						your students
+					</p>
+					<p>
+						<strong>Gaming</strong>: Just enjoy creating and playing your own
+						wordsearches. Share them with friends and family!
+					</p>
+					{!userInfo && (
+						<>
+							<button className='btn primary'>
+								<Link to='/login'>Login</Link>
+							</button>
+							<button className='btn'>
+								<Link to='/register'>Register</Link>
+							</button>
+						</>
+					)}
+				</article>
 
 				{/* Public games section */}
-				{!publicGrids && <div>no public grids</div>}
 				{publicGrids && (
 					<article className='games public-games'>
 						<div className='search-title'>
@@ -111,9 +103,7 @@ const Home = ({ history }) => {
 						</div>
 					</article>
 				)}
-
 				{/* User games section */}
-				{userGames.length === 0 && <div>no user grids</div>}
 				{userGames.length !== 0 && (
 					<article className='games user-games'>
 						<div className='search-title'>

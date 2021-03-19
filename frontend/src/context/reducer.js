@@ -139,12 +139,10 @@ const reducer = (state, action) => {
 			return { ...state, loading: true }
 		case USER_LOGIN_SUCCESS:
 		case USER_SET_INFO:
-			console.log('set userInfo to action.payload', action.payload)
 			return { ...state, loading: false, userInfo: action.payload }
 		case USER_LOGIN_FAIL:
 			return { ...state, loading: false, error: action.payload }
 		case USER_LOGOUT:
-			console.log('logout')
 			return { ...state, loading: false, userInfo: null }
 		case USER_REGISTER_REQUEST:
 			return { ...state, loading: true }
