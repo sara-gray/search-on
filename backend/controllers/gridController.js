@@ -30,7 +30,7 @@ const addGrid = asyncHandler(async (req, res) => {
 
 // @desc    Get Grid by ID
 // @route   GET /api/grids/:id
-// @access  Private
+// @access  Public
 const getGridDetails = asyncHandler(async (req, res) => {
 	const grid = await Grid.findById(req.params.id)
 
@@ -47,6 +47,7 @@ const getGridDetails = asyncHandler(async (req, res) => {
 // @access  Public
 const getPublicGrids = asyncHandler(async (req, res) => {
 	const grids = await Grid.find({ isPublic: true })
+	// change this to return an array of ids
 	if (grids) {
 		res.json(grids)
 	}

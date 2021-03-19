@@ -12,54 +12,39 @@ const Play = ({ location }) => {
 	const {
 		loading,
 		playing,
-		currentGrid,
-		fetchPublicGrids,
 		fetchGrid,
-		publicGrids,
+		currentGrid,
 		generateWordsearch,
 		gameStart,
 		gameReset,
 	} = useGlobalContext()
 
-	const [playGame, setPlayGame] = useState(null)
-
 	useEffect(() => {
 		const pages = location.pathname.split('/')
 		const id = pages[pages.length - 1]
 
-		if (publicGrids) {
-			const found = publicGrids.filter((grid) => grid.id === id)
-			if (found) {
-				setPlayGame(...found)
-			} else {
-				console.log('user grid')
-				// fetchGrid(id)
-			}
-			// setPlayGame(newGame)
-			// generateWordsearch(newGame)
-			// gameStart(newGame)
-			return () => {
-				gameReset()
-			}
-		} else {
-			fetchPublicGrids()
-		}
-	}, [publicGrids])
+		fetchGrid(id)
+		// gameStart(newGame)
 
-	// useEffect(() => {
-	// 	if (!playing && playGame !== null) {
-	// 		generateWordsearch(playGame)
-	// 		gameStart(playGame)
-	// 	}
-	// }, [playing])
+		return () => {
+			console.log('no game')
+			// gameReset()
+		}
+	}, [])
 
 	useEffect(() => {
-		if (playGame !== null) {
-			console.log('playGame')
-			// generateWordsearch(playGame)
-			// gameStart(playGame)
+		if (currentGrid) {
+			console.log('play game')
+		} else {
+			console.log('no game')
+			// resetGame()
 		}
-	}, [playGame])
+		// generateWordsearch(currentGrid)
+		// if (!playing && playGame !== null) {
+		// 	generateWordsearch(playGame)
+		// 	gameStart(playGame)
+		// }
+	}, [currentGrid])
 
 	if (loading) return <Loading />
 	return (

@@ -138,6 +138,8 @@ const AppProvider = ({ children }) => {
 			})
 		}
 	}
+
+	// Word search generation
 	const generateWordsearch = (newGame) => {
 		dispatch({ type: WORDSEARCH_GENERATE, payload: newGame })
 	}

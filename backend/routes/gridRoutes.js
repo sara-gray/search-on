@@ -9,9 +9,9 @@ import {
 
 import { protect } from '../middleware/authMiddleware.js'
 
-router.route('/').post(protect, addGrid)
 router.route('/').get(getPublicGrids)
-router.route('/:id').get(protect, getGridDetails)
+router.route('/:id').get(getGridDetails)
+router.route('/').post(protect, addGrid)
 router.route('/:id/public').put(protect, updateGridToPublic)
 
 export default router
