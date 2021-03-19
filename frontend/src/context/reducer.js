@@ -10,14 +10,12 @@ import {
 	GAME_SET_DIRECTION,
 	GAME_CELEBRATE_ON,
 	GAME_CELEBRATE_OFF,
-	FETCH_PUBLIC_REQUEST,
-	FETCH_PUBLIC_SUCCESS,
-	FETCH_PUBLIC_FAIL,
-	SET_LOADING,
-	CLEAR_LOADING,
-	FETCH_GAME_REQUEST,
-	FETCH_GAME_SUCCESS,
-	FETCH_GAME_FAIL,
+	GRID_PUBLIC_REQUEST,
+	GRID_PUBLIC_SUCCESS,
+	GRID_PUBLIC_FAIL,
+	GRID_GAME_REQUEST,
+	GRID_GAME_SUCCESS,
+	GRID_GAME_FAIL,
 	USER_LOGIN_REQUEST,
 	USER_LOGIN_SUCCESS,
 	USER_LOGIN_FAIL,
@@ -123,44 +121,35 @@ const reducer = (state, action) => {
 				playing: false,
 			}
 
-		case SET_LOADING:
-			return {
-				...state,
-				loading: true,
-			}
-		case CLEAR_LOADING:
-			return {
-				...state,
-				loading: false,
-			}
+		case GRID_PUBLIC_REQUEST:
+			return { ...state, loading: true }
+		case GRID_PUBLIC_SUCCESS:
+			return { ...state, loading: false, publicGrids: action.payload }
+		case GRID_PUBLIC_FAIL:
+			return { ...state, loading: false, error: action.payload }
 
-		case FETCH_PUBLIC_SUCCESS:
-			return {
-				...state,
-				loading: false,
-				publicIds: action.payload,
-			}
-		case FETCH_PUBLIC_FAIL:
-			return {
-				...state,
-				loading: false,
-			}
+		case GRID_GAME_REQUEST:
+			return { ...state, loading: true }
+		case GRID_GAME_SUCCESS:
+			return { ...state, loading: false, currentGrid: action.payload }
+		case GRID_GAME_FAIL:
+			return { ...state, loading: false, error: action.payload }
 
 		case USER_LOGIN_REQUEST:
-			return { loading: true }
+			return { ...state, loading: true }
 		case USER_LOGIN_SUCCESS:
 		case USER_SET_INFO:
-			return { loading: false, userInfo: action.payload }
+			return { ...state, loading: false, userInfo: action.payload }
 		case USER_LOGIN_FAIL:
-			return { loading: false, error: action.payload }
+			return { ...state, loading: false, error: action.payload }
 		case USER_LOGOUT:
-			return { loading: false, userInfo: null }
+			return { ...state, loading: false, userInfo: null }
 		case USER_REGISTER_REQUEST:
-			return { loading: true }
+			return { ...state, loading: true }
 		case USER_REGISTER_SUCCESS:
-			return { loading: false, userInfo: action.payload }
+			return { ...state, loading: false, userInfo: action.payload }
 		case USER_REGISTER_FAIL:
-			return { loading: false, error: action.payload }
+			return { ...state, loading: false, error: action.payload }
 
 		default:
 			return state

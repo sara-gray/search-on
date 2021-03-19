@@ -24,7 +24,7 @@ const Login = ({ history, location }) => {
 				position: toast.POSITION.BOTTOM_LEFT,
 				autoClose: 2000,
 			})
-			history.push('/edit')
+			history.push('/')
 		}
 	}, [userInfo])
 

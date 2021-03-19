@@ -56,6 +56,7 @@ Global Styles
 	box-sizing: border-box;
 }
 
+html,
 body {
 	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
 		Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -85,27 +86,16 @@ h3,
 h4 {
 	letter-spacing: var(--spacing);
 	text-transform: capitalize;
-	margin-bottom: 0.75rem;
+	/* margin-bottom: 0.75rem; */
 }
-h1 {
-	font-size: 3rem;
-}
-h2 {
-	font-size: 2rem;
-}
-h3 {
-	font-size: 1.25rem;
-}
-h4 {
-	font-size: 0.875rem;
-}
+
 p {
-	margin-bottom: 1.25rem;
+	margin-bottom: 1rem;
 	color: var(--clr-grey-standard);
 }
 @media screen and (min-width: 800px) {
 	h1 {
-		font-size: 4rem;
+		font-size: 2.8rem;
 	}
 	h2 {
 		font-size: 2.5rem;
@@ -283,7 +273,12 @@ nav {
 	background-color: var(--clr-secondary-mid);
 }
 
-/* HERO */
+/*
+=============== 
+Home page
+Shows a hero image with information, public wordsearches and user wordsearches
+===============
+*/
 .hero::before {
 	content: '';
 	position: absolute;
@@ -329,52 +324,67 @@ nav {
 	z-index: -999;
 }
 
-.hero-center {
+.home-center {
 	position: relative;
-	top: 8rem;
-	width: 100%;
+	top: 15vh;
+	width: 85vw;
 	display: grid;
 	grid-template-columns: 1fr;
+	grid-gap: 1rem;
 }
 
-.hero-info {
+.home-info {
 	background-color: var(--clr-primary-light);
 	text-transform: none;
-	margin: 0 2rem 2rem;
 	padding: 0.4rem 1rem;
 	border-radius: 10px;
 	box-shadow: var(--dark-popout);
+	max-height: 50vh;
 }
-.hero-info p {
-	font-size: small;
+.home-info p {
 	margin-bottom: 0.5rem;
 	color: var(--clr-grey-dark);
 }
-.hero-info h2 {
-	/* font-size: 2rem; */
-}
 
-@media screen and (min-width: 800px) {
-	/* Bigger screens */
-	.hero-center {
-		grid-template-columns: 2fr 1fr;
-	}
-	.hero-info {
-		/* max-height: 35vh; */
-		padding: 1rem;
-	}
-	.hero-info p {
-		margin-bottom: 0.2rem;
-		color: var(--clr-grey-dark);
-	}
-}
-
-.hero-cards {
+.games {
 	display: grid;
-	grid-template-columns: repeat(2, 1fr);
+	grid-template-columns: 1fr;
+	max-height: 50vh;
+	border-radius: 10px;
+}
+.game-cards {
+	display: grid;
+	grid-template-columns: 1fr;
 	max-height: 35vh;
 	overflow-y: scroll;
-	padding: 1rem;
+}
+.public-games {
+	background-color: var(--clr-grey-dark);
+	color: var(--clr-primary-light);
+}
+.user-games {
+	background-color: rgba(0, 0, 0, 0.8);
+	color: var(--clr-primary-light);
+}
+.search-title {
+	height: 2rem;
+	padding: 0.5rem;
+	margin-bottom: 0.5rem;
+	display: flex;
+	justify-content: space-between;
+}
+.search {
+	display: flex;
+	align-items: center;
+	background-color: transparent;
+}
+.search input {
+	display: inline;
+	display: none;
+	padding: 0.2rem;
+	margin-left: 0.2rem;
+	border-radius: 5px;
+	border: transparent;
 }
 
 .card {
@@ -385,7 +395,7 @@ nav {
 	border: transparent;
 	border-radius: 5px;
 	padding: 0.2rem;
-	margin: 0 2rem 1rem;
+	margin: 1rem 2rem;
 	cursor: pointer;
 }
 .small-card {
@@ -408,11 +418,63 @@ nav {
 	background-color: var(--clr-secondary-mid);
 	transform: rotate(-2deg) translateY(-0.5rem) scale(1.02);
 }
-@media screen and (max-width: 600px) {
-	/* Smaller screens */
-	.hero-cards {
-		/* grid-template-columns: 1fr 1fr;
-		max-height: 75vh; */
+
+/* Mobiles in landscape or tablets */
+@media screen and (max-width: 400px) {
+	/* .game-cards {
+		background-color: orange;
+		grid-template-columns: repeat(2, 1fr);
+	} */
+
+	/* .home-center {
+	} */
+}
+
+@media screen and (min-width: 600px) {
+	.home-center {
+		grid-template-columns: 2fr 1fr;
+	}
+	.public-games > .game-cards {
+		max-height: 22vh;
+	}
+	.user-games {
+		grid-column: 1 / span 2;
+	}
+	.user-games > .game-cards {
+		grid-template-columns: repeat(2, 1fr);
+		overflow: hidden;
+		max-height: fit-content;
+	}
+}
+
+@media screen and (max-height: 400px) {
+	h1 {
+		font-size: 2rem;
+	}
+	h2 {
+		font-size: 1.8rem;
+	}
+	.home-center {
+		top: 25vh;
+	}
+	.home-info {
+		max-height: 80vh;
+	}
+	.games {
+		max-height: 80vh;
+	}
+	.public-games > .game-cards {
+		max-height: 50vh;
+	}
+	.user-games {
+		margin-top: 10vh;
+		max-height: fit-content;
+	}
+}
+
+@media screen and (min-width: 800px) {
+	.user-games > .game-cards {
+		grid-template-columns: repeat(3, 1fr);
 	}
 }
 

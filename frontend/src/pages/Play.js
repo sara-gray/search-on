@@ -12,32 +12,30 @@ const Play = ({ location }) => {
 	const {
 		loading,
 		playing,
+		fetchGrid,
+		currentGrid,
 		generateWordsearch,
 		gameStart,
 		gameReset,
-		fetchGame,
 	} = useGlobalContext()
-
-	const [playGame, setPlayGame] = useState(null)
 
 	useEffect(() => {
 		const pages = location.pathname.split('/')
-		const gameId = pages[pages.length - 1]
-		const newGame = fetchGame(gameId)
-		setPlayGame(newGame)
-		generateWordsearch(newGame)
-		gameStart(newGame)
+		const id = pages[pages.length - 1]
+
+		fetchGrid(id)
+
 		return () => {
 			gameReset()
 		}
 	}, [])
 
 	useEffect(() => {
-		if (!playing && playGame !== null) {
-			generateWordsearch(playGame)
-			gameStart(playGame)
+		if (currentGrid && !playing) {
+			generateWordsearch({ ...currentGrid })
+			gameStart({ ...currentGrid })
 		}
-	}, [playing])
+	}, [currentGrid, playing])
 
 	if (loading) return <Loading />
 	return (
