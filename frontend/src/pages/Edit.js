@@ -1,85 +1,141 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useGlobalContext } from '../context/context'
 
-const SMALL = { x: 10, y: 10 }
-const MEDIUM = { x: 15, y: 15 }
-const LARGE = { x: 20, y: 20 }
-
-const Edit = () => {
-	const editID = ''
+const Edit = ({ location }) => {
+	const languages = [{ code: 'en', text: 'English' }]
+	const { fetchGrid, currentGrid } = useGlobalContext()
+	const [editID, setEditID] = useState('')
 	const [title, setTitle] = useState('')
-	const [desc, setDesc] = useState('')
-	const [word, setWord] = useState('')
-	const [words, setWords] = useState([])
-	const [size, setSize] = useState(MEDIUM)
+	const [description, setDescription] = useState('')
+	const [sizeX, setSizeX] = useState(0)
+	const [sizeY, setSizeY] = useState(0)
 	const [language, setLanguage] = useState('en')
+	const [words, setWords] = useState('')
+
+	useEffect(() => {
+		const pages = location.pathname.split('/')
+		const id = pages[pages.length - 1]
+
+		if (id !== 'edit') {
+			setEditID(id)
+			fetchGrid(id)
+		}
+
+		return () => {
+			console.log('finished editing')
+			// clear current grid in reducer
+		}
+	}, [])
+
+	const decode = (code) => {
+		return languages.filter((lang) => lang.code === code).text
+	}
+
+	const wordsToString = (words) => {
+		console.log(words, words.join())
+		return words.join()
+	}
+
+	useEffect(() => {
+		if (currentGrid) {
+			const { title, desc, words, size, language } = currentGrid
+			setTitle(title)
+			setDescription(desc)
+			setSizeX(size.x)
+			setSizeY(size.y)
+			setLanguage(language)
+			setWords(wordsToString(words))
+		}
+	}, [currentGrid])
 
 	const handleSubmit = (e) => {
 		e.preventDefault()
 
-		console.log('save form', title, desc, words, size, language)
+		const grid = {
+			editID,
+			title,
+			description,
+			size: { sizeX, sizeY },
+			language,
+			words,
+		}
+
+		if (editID === '') {
+			console.log('create grid', grid)
+		} else {
+			console.log('update grid', grid)
+		}
 	}
-	const addWord = (e) => {
-		e.preventDefault()
-		console.log('add word')
-	}
+
 	return (
-		<div className='section edit-form'>
-			<form className='edit-form-control' onSubmit={handleSubmit}>
-				<label htmlFor='title'>Wordsearch title:</label>
+		<div className='section'>
+			<form className='edit-form' onSubmit={handleSubmit}>
 				<input
 					id='title'
 					type='text'
-					className='edit-input'
-					placeholder='Title'
+					className='edit-input-line'
+					placeholder='Give your word grid a title'
 					value={title}
 					onChange={(e) => setTitle(e.target.value)}
 					required
 				/>
+				<label htmlFor='desc'>Enter a brief description of your grid:</label>
+				<textarea
+					id='desc'
+					name='desc'
+					className='edit-input-line'
+					rows='3'
+					value={description}
+					onChange={(e) => setDescription(e.target.value)}
+				/>
 
-				<label htmlFor='desc'>
-					Enter a brief description of your wordsearch:
-				</label>
-				<textarea id='desc' name='desc'></textarea>
+				<label htmlFor='desc'>Words or phrases separated by commas (CSV)</label>
+				<textarea
+					id='words'
+					name='words'
+					className='edit-input-line'
+					rows='10'
+					value={words}
+					// onChange={(e) => setWords(e.target.value)}
+				/>
+
+				<p>Select a grid size:</p>
 				<div className='edit-grid-size'>
-					<p>Select a grid size:</p>
-					<label htmlFor='small'>Small 10x10</label>
+					<label htmlFor='sizeX'>Width:</label>
 					<input
-						type='radio'
-						id='small'
-						value='10x10'
-						checked
-						onChange={(e) => setSize(e.target.value ? SMALL : {})}
+						id='sizeX'
+						name='sizeX'
+						type='number'
+						min='5'
+						max='20'
+						className='edit-size-number'
+						placeholder='10'
+						value={sizeX}
+						onChange={(e) => setSizeX(e.target.value)}
 					/>
-
-					<label htmlFor='medium'>Medium 15x15</label>
+					<label htmlFor='sizeY'>Height:</label>
 					<input
-						type='radio'
-						id='medium'
-						value='15x15'
-						onChange={(e) => setSize(e.target.value ? MEDIUM : {})}
-					/>
-
-					<label htmlFor='large'>Large</label>
-					<input
-						type='radio'
-						id='louie'
-						value='20x20'
-						onChange={(e) => setSize(e.target.value ? LARGE : {})}
+						id='sizeY'
+						name='sizeY'
+						type='number'
+						min='5'
+						max='20'
+						className='edit-size-number'
+						placeholder='10'
+						value={sizeY}
+						onChange={(e) => setSizeY(e.target.value)}
 					/>
 				</div>
-
-				<label htmlFor='pet-select'>Choose a language:</label>
-
-				<select id='language-select'>
-					<option value=''>--Please choose an option--</option>
+				<p>Change your language:</p>
+				<select
+					id='edit-language-select'
+					className='edit-language-select edit-input-line'
+					value={language}
+					onChange={(e) => setLanguage(e.target.value)}>
 					<option value='en'>English</option>
+					<option value='cy'>Welsh</option>
+					<option value='it'>Italian</option>
 				</select>
-			</form>
-			<form onSubmit={addWord}>
-				<label htmlFor='words'>
-					Type in your words separated by a comma (csv):
-				</label>
-				<textarea id='words' name='words' rows='5' cols='33'></textarea>
 				<button type='submit' className='btn primary'>
 					{editID ? 'Update' : 'Create'}
 				</button>

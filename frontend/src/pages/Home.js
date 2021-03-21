@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { IoSearchOutline } from 'react-icons/io5'
+import { IoSearchOutline, IoAddCircleOutline } from 'react-icons/io5'
 import { useGlobalContext } from '../context/context'
 import Loading from '../components/Loading'
 import { FaPlay, FaEdit } from 'react-icons/fa'
@@ -107,6 +107,11 @@ const Home = ({ history }) => {
 								onClick={() => {
 									console.log('searching?')
 								}}>
+								<IoAddCircleOutline
+									onClick={() => {
+										history.push(`/edit`)
+									}}
+								/>
 								<IoSearchOutline />
 								<input type='text'></input>
 							</div>
