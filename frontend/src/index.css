@@ -679,7 +679,8 @@ li {
 
 .user-grid-icons {
 	display: flex;
-	justify-content: space-around;
-	padding-top: 2rem;
-	/* font-size: 1.5rem; */
+}
+.user-grid-icons svg {
+	margin-right: 0.6rem;
+	margin-top: 0.2rem;
 }

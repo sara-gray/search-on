@@ -27,26 +27,14 @@ const Home = ({ history }) => {
 		if (userInfo) fetchUserGrids(userInfo)
 	}, [userInfo])
 
-	const getIdFromTarget = (target) => {
-		if (target.id === null) console.log('no id')
-		if (target.tagName === 'DIV') {
-			return target.id
-		} else {
-			console.log(target.parentNode.parentNode)
-			return target.parentNode.id
-		}
-	}
-
 	const playGame = (e) => {
-		const id = getIdFromTarget(e.target)
-		console.log(id)
-		// history.push(`/play/${id}`)
+		const id = e.target.closest('div').id
+		history.push(`/play/${id}`)
 	}
 
 	const editGame = (e) => {
-		const id = getIdFromTarget(e.target)
-		console.log(id)
-		// history.push(`/edit/${id}`)
+		const id = e.target.closest('div').id
+		history.push(`/edit/${id}`)
 	}
 
 	if (loading) return <Loading />
@@ -100,6 +88,8 @@ const Home = ({ history }) => {
 											<h4>{title}</h4>
 											<p style={{ fontSize: '0.8rem' }}>{desc}</p>
 											Grid size: {size.x} x {size.y}
+											<br />
+											<FaPlay />
 										</div>
 									</div>
 								)
@@ -130,6 +120,7 @@ const Home = ({ history }) => {
 											<h4>{title}</h4>
 											<p style={{ fontSize: '0.8rem' }}>{desc}</p>
 											Grid size: {size.x} x {size.y}
+											<br />
 											<div className='user-grid-icons' id={_id}>
 												<FaPlay onClick={playGame} />
 												<FaEdit onClick={editGame} />
