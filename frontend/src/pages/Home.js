@@ -1,18 +1,20 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { IoSearchOutline } from 'react-icons/io5'
 import { useGlobalContext } from '../context/context'
 import Loading from '../components/Loading'
+import { FaPlay, FaEdit } from 'react-icons/fa'
 
 const Home = ({ history }) => {
 	const {
 		loading,
 		userInfo,
 		publicGrids,
+		userGrids,
 		fetchPublicGrids,
+		fetchUserGrids,
 	} = useGlobalContext()
 
-	const [userGames, setUserGames] = useState([])
 	const MAX_HERO_IMAGES = 6
 	const randomImage =
 		Math.floor(Math.random() * Math.floor(MAX_HERO_IMAGES)) + 1
@@ -22,27 +24,29 @@ const Home = ({ history }) => {
 	}, [])
 
 	useEffect(() => {
-		if (userInfo) {
-			console.log('Get all grids for this user')
-		}
+		if (userInfo) fetchUserGrids(userInfo)
 	}, [userInfo])
 
 	const getIdFromTarget = (target) => {
+		if (target.id === null) console.log('no id')
 		if (target.tagName === 'DIV') {
 			return target.id
 		} else {
+			console.log(target.parentNode.parentNode)
 			return target.parentNode.id
 		}
 	}
 
-	const selectPublicGame = (e) => {
+	const playGame = (e) => {
 		const id = getIdFromTarget(e.target)
-		history.push(`/play/${id}`)
+		console.log(id)
+		// history.push(`/play/${id}`)
 	}
 
-	const editUserGame = (e) => {
+	const editGame = (e) => {
 		const id = getIdFromTarget(e.target)
-		history.push(`/edit/${id}`)
+		console.log(id)
+		// history.push(`/edit/${id}`)
 	}
 
 	if (loading) return <Loading />
@@ -91,7 +95,7 @@ const Home = ({ history }) => {
 							{publicGrids.map((nextGame) => {
 								const { _id, title, desc, size } = nextGame
 								return (
-									<div key={_id} className='card' onClick={selectPublicGame}>
+									<div key={_id} className='card' onClick={playGame}>
 										<div className='inner-card' id={_id}>
 											<h4>{title}</h4>
 											<p style={{ fontSize: '0.8rem' }}>{desc}</p>
@@ -104,7 +108,7 @@ const Home = ({ history }) => {
 					</article>
 				)}
 				{/* User games section */}
-				{userGames.length !== 0 && (
+				{userGrids && (
 					<article className='games user-games'>
 						<div className='search-title'>
 							<h4>your games</h4>
@@ -118,14 +122,18 @@ const Home = ({ history }) => {
 							</div>
 						</div>
 						<div className='game-cards'>
-							{userGames.map((nextGame) => {
-								const { id, title, desc, size } = nextGame
+							{userGrids.map((nextGame) => {
+								const { _id, title, desc, size } = nextGame
 								return (
-									<div key={id} className='card' onClick={editUserGame}>
-										<div className='inner-card' id={id}>
+									<div key={_id} className='card'>
+										<div className='inner-card'>
 											<h4>{title}</h4>
 											<p style={{ fontSize: '0.8rem' }}>{desc}</p>
 											Grid size: {size.x} x {size.y}
+											<div className='user-grid-icons' id={_id}>
+												<FaPlay onClick={playGame} />
+												<FaEdit onClick={editGame} />
+											</div>
 										</div>
 									</div>
 								)

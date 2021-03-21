@@ -35,6 +35,9 @@ import {
 	GRID_GAME_SUCCESS,
 	GRID_GAME_REQUEST,
 	GRID_GAME_FAIL,
+	GRID_USER_REQUEST,
+	GRID_USER_SUCCESS,
+	GRID_USER_FAIL,
 } from './types'
 
 const AppContext = React.createContext()
@@ -52,11 +55,17 @@ const initialState = {
 	userInfo: null,
 	error: null,
 	publicGrids: null,
+	userGrids: null,
 	currentGrid: null,
 }
 
 const AppProvider = ({ children }) => {
 	const [state, dispatch] = useReducer(reducer, initialState)
+
+	// Word search generation
+	const generateWordsearch = (newGame) => {
+		dispatch({ type: WORDSEARCH_GENERATE, payload: newGame })
+	}
 
 	// Play actions
 	const gameStart = (game) => {
@@ -73,7 +82,6 @@ const AppProvider = ({ children }) => {
 	const gameRestart = () => {
 		dispatch({ type: GAME_CELEBRATE_OFF })
 	}
-
 	const setDirection = (direction) => {
 		dispatch({ type: GAME_SET_DIRECTION, payload: direction })
 	}
@@ -94,7 +102,7 @@ const AppProvider = ({ children }) => {
 		dispatch({ type: GAME_FOUND_WORD, payload: word })
 	}
 
-	// Fetch actions
+	// Grid actions
 	const fetchPublicGrids = async () => {
 		try {
 			dispatch({ type: GRID_PUBLIC_REQUEST })
@@ -116,7 +124,28 @@ const AppProvider = ({ children }) => {
 			})
 		}
 	}
+	const fetchUserGrids = async (user) => {
+		try {
+			dispatch({ type: GRID_USER_REQUEST })
+			const config = {
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${user.token}`,
+				},
+			}
 
+			const { data } = await axios.get('/api/grids/user', config)
+			dispatch({ type: GRID_USER_SUCCESS, payload: data })
+		} catch (error) {
+			dispatch({
+				type: GRID_USER_FAIL,
+				payload:
+					error.response && error.response.data.message
+						? error.response.data.message
+						: error.message,
+			})
+		}
+	}
 	const fetchGrid = async (id) => {
 		try {
 			dispatch({ type: GRID_GAME_REQUEST })
@@ -139,16 +168,10 @@ const AppProvider = ({ children }) => {
 		}
 	}
 
-	// Word search generation
-	const generateWordsearch = (newGame) => {
-		dispatch({ type: WORDSEARCH_GENERATE, payload: newGame })
-	}
-
 	// User actions
 	const setUserInfo = (user) => {
 		dispatch({ type: USER_SET_INFO, payload: user })
 	}
-
 	const login = async (email, password) => {
 		try {
 			dispatch({ type: USER_LOGIN_REQUEST })
@@ -177,7 +200,6 @@ const AppProvider = ({ children }) => {
 			})
 		}
 	}
-
 	const register = async (name, email, password) => {
 		try {
 			dispatch({ type: USER_REGISTER_REQUEST })
@@ -207,36 +229,10 @@ const AppProvider = ({ children }) => {
 			})
 		}
 	}
-
 	const logout = async () => {
 		localStorage.removeItem('userInfo')
 		dispatch({ type: USER_LOGOUT })
 	}
-
-	// const getUserDetails = async (id) => {
-	// 	try {
-	// 		dispatch({ type: USER_DETAILS_REQUEST })
-
-	// 		const config = {
-	// 			headers: {
-	// 				'Content-Type': 'application/json',
-	// 				Authorization: `Bearer ${userInfo.token}`,
-	// 			},
-	// 		}
-
-	// 		const { data } = await axios.get(`/api/users/${id}`, config)
-	// 		dispatch({ type: USER_DETAILS_SUCCESS, payload: data })
-	// 	} catch (error) {
-	// 		dispatch({
-	// 			type: USER_DETAILS_FAIL,
-	// 			payload:
-	// 				error.response && error.response.data.message
-	// 					? error.response.data.message
-	// 					: error.message,
-	// 		})
-	// 	}
-	// }
-
 	const updateUserProfile = async (user) => {
 		try {
 			dispatch({ type: USER_UPDATE_PROFILE_REQUEST })
@@ -278,6 +274,7 @@ const AppProvider = ({ children }) => {
 				addToGuess,
 				foundWord,
 				fetchPublicGrids,
+				fetchUserGrids,
 				fetchGrid,
 				generateWordsearch,
 				setUserInfo,

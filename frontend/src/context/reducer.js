@@ -24,6 +24,9 @@ import {
 	USER_REGISTER_REQUEST,
 	USER_REGISTER_SUCCESS,
 	USER_REGISTER_FAIL,
+	GRID_USER_REQUEST,
+	GRID_USER_SUCCESS,
+	GRID_USER_FAIL,
 } from './types'
 
 const reducer = (state, action) => {
@@ -126,7 +129,24 @@ const reducer = (state, action) => {
 		case GRID_PUBLIC_SUCCESS:
 			return { ...state, loading: false, publicGrids: action.payload }
 		case GRID_PUBLIC_FAIL:
-			return { ...state, loading: false, error: action.payload }
+			return {
+				...state,
+				loading: false,
+				publicGrids: null,
+				error: action.payload,
+			}
+
+		case GRID_USER_REQUEST:
+			return { ...state, loading: true }
+		case GRID_USER_SUCCESS:
+			return { ...state, loading: false, userGrids: action.payload }
+		case GRID_USER_FAIL:
+			return {
+				...state,
+				loading: false,
+				userGrids: null,
+				error: action.payload,
+			}
 
 		case GRID_GAME_REQUEST:
 			return { ...state, loading: true }
@@ -143,7 +163,7 @@ const reducer = (state, action) => {
 		case USER_LOGIN_FAIL:
 			return { ...state, loading: false, error: action.payload }
 		case USER_LOGOUT:
-			return { ...state, loading: false, userInfo: null }
+			return { ...state, loading: false, userInfo: null, userGrids: null }
 		case USER_REGISTER_REQUEST:
 			return { ...state, loading: true }
 		case USER_REGISTER_SUCCESS:

@@ -33,9 +33,6 @@ const addGrid = asyncHandler(async (req, res) => {
 // @access  Public
 const getGridDetails = asyncHandler(async (req, res) => {
 	const id = req.params.id
-	if (id === 'user') {
-		return res.send('user grids from public route')
-	}
 
 	const grid = await Grid.findById(id)
 
@@ -54,20 +51,7 @@ const getPublicGrids = asyncHandler(async (req, res) => {
 	let grids = await Grid.find({ isPublic: true })
 
 	if (grids) {
-		let publicGrids = []
-		grids.map((grid) => {
-			const { title, desc, words, size, language, isPublic } = grid
-			let publicGrid = new Grid({
-				title,
-				desc,
-				words,
-				size,
-				language,
-				isPublic,
-			})
-			publicGrids = [...publicGrids, publicGrid]
-		})
-		res.json(publicGrids)
+		res.json(grids)
 	} else {
 		res.status(404)
 		throw new Error('No public grids available')
@@ -78,14 +62,15 @@ const getPublicGrids = asyncHandler(async (req, res) => {
 // @route   GET /api/grids/user
 // @access  Private
 const getUserGrids = asyncHandler(async (req, res) => {
-	const user = req.user._id
+	const userId = req.user._id
 	// 604cac011a26d31cfc23105b
-	// const grids = await Grid.find({ isPublic: true })
-	// change this to return an array of ids
-	// if (grids) {
-	// 	return res.json(grids)
-	// }
-	res.send('Looking for user grids available via protected route')
+	const grids = await Grid.find({ user: userId })
+	if (grids) {
+		res.json(grids)
+	} else {
+		res.status(404)
+		throw new Error('No public grids available')
+	}
 })
 
 // @desc    Update Grid to public
