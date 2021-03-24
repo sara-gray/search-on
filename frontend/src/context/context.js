@@ -15,8 +15,6 @@ import {
 	GAME_CELEBRATE_ON,
 	GAME_CELEBRATE_OFF,
 	GAME_FOUND_WORD,
-	GRID_PUBLIC_REQUEST,
-	GRID_PUBLIC_SUCCESS,
 	USER_LOGIN_REQUEST,
 	USER_LOGIN_SUCCESS,
 	USER_LOGIN_FAIL,
@@ -25,19 +23,25 @@ import {
 	USER_REGISTER_REQUEST,
 	USER_REGISTER_SUCCESS,
 	USER_REGISTER_FAIL,
-	USER_DETAILS_REQUEST,
-	USER_DETAILS_SUCCESS,
-	USER_DETAILS_FAIL,
 	USER_UPDATE_PROFILE_REQUEST,
 	USER_UPDATE_PROFILE_SUCCESS,
 	USER_UPDATE_PROFILE_FAIL,
+	GRID_PUBLIC_REQUEST,
+	GRID_PUBLIC_SUCCESS,
 	GRID_PUBLIC_FAIL,
 	GRID_GAME_SUCCESS,
 	GRID_GAME_REQUEST,
+	GRID_GAME_RESET,
 	GRID_GAME_FAIL,
 	GRID_USER_REQUEST,
 	GRID_USER_SUCCESS,
 	GRID_USER_FAIL,
+	GRID_CREATE_SUCCESS,
+	GRID_CREATE_REQUEST,
+	GRID_CREATE_FAIL,
+	GRID_UPDATE_SUCCESS,
+	GRID_UPDATE_REQUEST,
+	GRID_UPDATE_FAIL,
 } from './types'
 
 const AppContext = React.createContext()
@@ -167,6 +171,55 @@ const AppProvider = ({ children }) => {
 			})
 		}
 	}
+	const currentGridReset = () => {
+		dispatch({ type: GRID_GAME_RESET })
+	}
+	const createGrid = async (user, grid) => {
+		try {
+			dispatch({ type: GRID_CREATE_REQUEST })
+
+			const config = {
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${user.token}`,
+				},
+			}
+
+			const { data } = await axios.post(`/api/grids/`, grid, config)
+			dispatch({ type: GRID_CREATE_SUCCESS, payload: data })
+		} catch (error) {
+			dispatch({
+				type: GRID_CREATE_FAIL,
+				payload:
+					error.response && error.response.data.message
+						? error.response.data.message
+						: error.message,
+			})
+		}
+	}
+	const updateGrid = async (user, grid) => {
+		try {
+			dispatch({ type: GRID_UPDATE_REQUEST })
+
+			const config = {
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${user.token}`,
+				},
+			}
+
+			const { data } = await axios.put(`/api/grids/${grid._id}`, grid, config)
+			dispatch({ type: GRID_UPDATE_SUCCESS, payload: data })
+		} catch (error) {
+			dispatch({
+				type: GRID_UPDATE_FAIL,
+				payload:
+					error.response && error.response.data.message
+						? error.response.data.message
+						: error.message,
+			})
+		}
+	}
 
 	// User actions
 	const setUserInfo = (user) => {
@@ -276,6 +329,9 @@ const AppProvider = ({ children }) => {
 				fetchPublicGrids,
 				fetchUserGrids,
 				fetchGrid,
+				currentGridReset,
+				createGrid,
+				updateGrid,
 				generateWordsearch,
 				setUserInfo,
 				login,

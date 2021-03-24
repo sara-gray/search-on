@@ -3,7 +3,7 @@ import { useGlobalContext } from '../context/context'
 
 const Edit = ({ location }) => {
 	const languages = [{ code: 'en', text: 'English' }]
-	const { fetchGrid, currentGrid } = useGlobalContext()
+	const { fetchGrid, currentGrid, currentGridReset } = useGlobalContext()
 	const [editID, setEditID] = useState('')
 	const [title, setTitle] = useState('')
 	const [description, setDescription] = useState('')
@@ -23,17 +23,13 @@ const Edit = ({ location }) => {
 
 		return () => {
 			console.log('finished editing')
-			// clear current grid in reducer
+			currentGridReset()
 		}
 	}, [])
 
 	const decode = (code) => {
+		// TODO
 		return languages.filter((lang) => lang.code === code).text
-	}
-
-	const wordsToString = (words) => {
-		console.log(words, words.join())
-		return words.join()
 	}
 
 	useEffect(() => {
@@ -44,7 +40,7 @@ const Edit = ({ location }) => {
 			setSizeX(size.x)
 			setSizeY(size.y)
 			setLanguage(language)
-			setWords(wordsToString(words))
+			setWords(words.join(', '))
 		}
 	}, [currentGrid])
 
@@ -96,7 +92,7 @@ const Edit = ({ location }) => {
 					className='edit-input-line'
 					rows='10'
 					value={words}
-					// onChange={(e) => setWords(e.target.value)}
+					onChange={(e) => setWords(e.target.value)}
 				/>
 
 				<p>Select a grid size:</p>

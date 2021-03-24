@@ -28,6 +28,26 @@ const addGrid = asyncHandler(async (req, res) => {
 	}
 })
 
+// @desc    Update grid
+// @route   PUT /api/grids/:id
+// @access  Private
+const updateGrid = asyncHandler(async (req, res) => {
+	const id = req.params.id
+	let grid = await Grid.findById(id)
+
+	if (grid) {
+		const { title, desc, words, size, language, isPublic } = req.body
+
+		grid = { ...grid, title, desc, words, size, language, isPublic }
+
+		const updatedGrid = await grid.save()
+		res.json(updatedGrid)
+	} else {
+		res.status(404)
+		throw new Error('Grid not found to update')
+	}
+})
+
 // @desc    Get Grid by ID
 // @route   GET /api/grids/:id
 // @access  Public

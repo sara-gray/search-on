@@ -15,6 +15,7 @@ import {
 	GRID_PUBLIC_FAIL,
 	GRID_GAME_REQUEST,
 	GRID_GAME_SUCCESS,
+	GRID_GAME_RESET,
 	GRID_GAME_FAIL,
 	USER_LOGIN_REQUEST,
 	USER_LOGIN_SUCCESS,
@@ -152,8 +153,15 @@ const reducer = (state, action) => {
 			return { ...state, loading: true }
 		case GRID_GAME_SUCCESS:
 			return { ...state, loading: false, currentGrid: action.payload }
+		case GRID_GAME_RESET:
+			return { ...state, loading: false, currentGrid: null }
 		case GRID_GAME_FAIL:
-			return { ...state, loading: false, error: action.payload }
+			return {
+				...state,
+				loading: false,
+				currentGrid: null,
+				error: action.payload,
+			}
 
 		case USER_LOGIN_REQUEST:
 			return { ...state, loading: true }
